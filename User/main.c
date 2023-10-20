@@ -20,6 +20,7 @@ TaskHandle_t LED0Task_Handler;
 //任务函数
 void led0_task(void *pvParameters);
 
+/*
 //任务优先级
 #define LED1_TASK_PRIO		3
 //任务堆栈大小	
@@ -28,26 +29,8 @@ void led0_task(void *pvParameters);
 TaskHandle_t LED1Task_Handler;
 //任务函数
 void led1_task(void *pvParameters);
+*/
 
-
- 
-void GPIO_INIT()
-{
-     
-      GPIO_InitTypeDef  GPIO_InitStructure;
-    
-      RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);   //使能PB,PE端口时钟
-            
-      GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;   //LED0-->PB.5 端口配置
-      GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;    //推挽输出
-      GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;   //IO口速度为50MHz
-      GPIO_Init(GPIOA, &GPIO_InitStructure);  //根据设定参数初始化GPIOB.5
-      GPIO_SetBits(GPIOA,GPIO_Pin_0);     //PB.5 输出高
-
-      GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;   //LED1-->PE.5 端口配置, 推挽输出
-      GPIO_Init(GPIOA, &GPIO_InitStructure);  //推挽输出 ，IO口速度为50MHz
-      GPIO_SetBits(GPIOA,GPIO_Pin_5);     //PE.5 输出高 
-}
  
  void start_task(void *pvParameters)
 {
@@ -59,13 +42,7 @@ void GPIO_INIT()
                 (void*          )NULL,  
                 (UBaseType_t    )LED0_TASK_PRIO,    
                 (TaskHandle_t*  )&LED0Task_Handler); 
-    //创建LED1任务
-    xTaskCreate((TaskFunction_t )led1_task,     
-                (const char*    )"led1_task",   
-                (uint16_t       )LED1_STK_SIZE, 
-                (void*          )NULL,
-                (UBaseType_t    )LED1_TASK_PRIO,
-                (TaskHandle_t*  )&LED1Task_Handler);         
+    
     vTaskDelete(StartTask_Handler); //删除开始任务
     taskEXIT_CRITICAL();            //退出临界区
 }
@@ -74,29 +51,17 @@ void led0_task(void *pvParameters)
 {
      while(1)
      {
-          GPIO_SetBits(GPIOA,GPIO_Pin_5);
-          vTaskDelay(500);
-          GPIO_ResetBits(GPIOA,GPIO_Pin_5);
-          vTaskDelay(500);
+          
      }
 }
-//LED1 任务函数
-void led1_task(void *pvParameters)
-{
-    while(1)
-    {
-        GPIO_ResetBits(GPIOA,GPIO_Pin_0);
-        vTaskDelay(300);
-        GPIO_SetBits(GPIOA,GPIO_Pin_0);
-        vTaskDelay(300);
-    }
-}
+
 int main(void)
 {  
      
      NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组 4 
-     GPIO_INIT();
      
+    /*init*/
+    
      //创建开始任务
     xTaskCreate((TaskFunction_t )start_task,            //任务函数
                 (const char*    )"start_task",          //任务名称
