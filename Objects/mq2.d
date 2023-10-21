@@ -29,3 +29,5 @@
 .\objects\mq2.o: .\Library\stm32f10x_wwdg.h
 .\objects\mq2.o: .\Library\misc.h
 .\objects\mq2.o: Hardware\MQ2\MQ2.h
+.\objects\mq2.o: .\System\Delay.h
+.\objects\mq2.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\math.h

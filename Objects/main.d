@@ -40,3 +40,4 @@
 .\objects\main.o: .\FreeRTOS\include\list.h
 .\objects\main.o: .\Hardware\OLED\OLED.h
 .\objects\main.o: .\Hardware\DHT11\DHT.h
+.\objects\main.o: .\Hardware\MQ2\MQ2.h

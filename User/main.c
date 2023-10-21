@@ -3,7 +3,9 @@
 #include "task.h"
 #include "OLED.h"
 #include "DHT.h"
+#include "MQ2.h"
 
+extern uint16_t AD_Value[4];
 //任务优先级
 #define START_TASK_PRIO		1
 //任务堆栈大小	
@@ -62,7 +64,10 @@ static void DHT11_Show(void)
         OLED_ShowNum(1, 6, DHT11_Data.temp_int, 2);
         OLED_ShowString(1, 8, ".");
         OLED_ShowNum(1, 9, DHT11_Data.temp_deci, 1);      
-    }
+    }else
+	{
+		OLED_ShowString(4,1,"hello");
+	}
 }
 void led0_task(void *pvParameters)
 {
@@ -70,7 +75,9 @@ void led0_task(void *pvParameters)
      {
 		 OLED_ShowString(1, 1, "temp:");
 		 OLED_ShowString(2, 1, "humi:");
-         DHT11_Show();
+		 OLED_ShowString(3, 1, "MQ2:");
+		 OLED_ShowNum(3, 5,MQ2_GetPPM(),4);
+		 DHT11_Show();
      }
 }
 
@@ -81,7 +88,9 @@ int main(void)
      
     /*init*/
     OLED_Init();
-		 DHT11_GPIO_Config();
+	DHT11_GPIO_Config();
+	MQ2_Init();
+	TIM3_Init();
      //创建开始任务
     xTaskCreate((TaskFunction_t )start_task,            //任务函数
                 (const char*    )"start_task",          //任务名称
