@@ -1,7 +1,7 @@
 #ifndef __MQ2_H
 #define __MQ2_H
 
-#define RL  5.1 //RL的阻值
+#define RL  5 //RL的阻值
 #define CAL_PPM 20//校准环境中ppm的值
 
 

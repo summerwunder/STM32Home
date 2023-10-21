@@ -19,7 +19,7 @@ void MQ2_Init()//MQ2≥ı ºªØ
 	GPIO_InitStructure.GPIO_Speed=GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA,&GPIO_InitStructure);
 	
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_55Cycles5);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 1, ADC_SampleTime_55Cycles5);
 	
 	ADC_InitTypeDef ADC_InitStructure;
 	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
@@ -81,11 +81,9 @@ float MQ2_GetPPM()
 	float Vr1=3.3f * x / 4096.f;
 	Vr1=((float)((int)((Vr1+0.005)*100)))/100;
 	float RS=(3.3f-Vr1)/ Vr1 * RL;
-	if(times<3){
-		R0=RS/pow(CAL_PPM / 613.9f,1 / -2.074f);
-	}
+	R0=RS/pow(CAL_PPM / 613.9f,1 / -2.074f);
 	float ppm=613.9f * pow(RS/R0,-2.074f);
-	return R0;
+	return ppm;
 }
 
 void TIM3_Init()

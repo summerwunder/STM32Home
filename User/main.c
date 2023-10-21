@@ -4,6 +4,7 @@
 #include "OLED.h"
 #include "DHT.h"
 #include "MQ2.h"
+#include "Buzzer.h"
 
 extern uint16_t AD_Value[4];
 //任务优先级
@@ -73,11 +74,13 @@ void led0_task(void *pvParameters)
 {
      while(1)
      {
+
 		 OLED_ShowString(1, 1, "temp:");
 		 OLED_ShowString(2, 1, "humi:");
 		 OLED_ShowString(3, 1, "MQ2:");
 		 OLED_ShowNum(3, 5,MQ2_GetPPM(),4);
 		 DHT11_Show();
+		 Buzzer_OFF();
      }
 }
 
@@ -91,6 +94,7 @@ int main(void)
 	DHT11_GPIO_Config();
 	MQ2_Init();
 	TIM3_Init();
+	Buzzer_Init();
      //创建开始任务
     xTaskCreate((TaskFunction_t )start_task,            //任务函数
                 (const char*    )"start_task",          //任务名称

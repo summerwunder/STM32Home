@@ -41,3 +41,4 @@
 .\objects\main.o: .\Hardware\OLED\OLED.h
 .\objects\main.o: .\Hardware\DHT11\DHT.h
 .\objects\main.o: .\Hardware\MQ2\MQ2.h
+.\objects\main.o: .\Hardware\Buzzer\Buzzer.h

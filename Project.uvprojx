@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Start;.\User;.\Library;.\System;.\Hardware;.\FreeRTOS\include;.\FreeRTOS\portable\RVDS\ARM_CM3;.\Hardware\DHT11;.\Hardware\OLED;.\Hardware\MQ2</IncludePath>
+              <IncludePath>.\Start;.\User;.\Library;.\System;.\Hardware;.\FreeRTOS\include;.\FreeRTOS\portable\RVDS\ARM_CM3;.\Hardware\DHT11;.\Hardware\OLED;.\Hardware\MQ2;.\Hardware\Buzzer</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
