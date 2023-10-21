@@ -1,7 +1,7 @@
-.\objects\oled.o: Hardware\OLED.c
+.\objects\oled.o: Hardware\OLED\OLED.c
 .\objects\oled.o: .\Start\stm32f10x.h
 .\objects\oled.o: .\Start\core_cm3.h
-.\objects\oled.o: E:\MDK536\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\oled.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\oled.o: .\Start\system_stm32f10x.h
 .\objects\oled.o: .\User\stm32f10x_conf.h
 .\objects\oled.o: .\Library\stm32f10x_adc.h
@@ -28,4 +28,5 @@
 .\objects\oled.o: .\Library\stm32f10x_usart.h
 .\objects\oled.o: .\Library\stm32f10x_wwdg.h
 .\objects\oled.o: .\Library\misc.h
-.\objects\oled.o: Hardware\OLED_Font.h
+.\objects\oled.o: Hardware\OLED\OLED_Font.h
+.\objects\oled.o: Hardware\OLED\OLED.h

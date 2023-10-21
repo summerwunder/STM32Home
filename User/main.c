@@ -1,6 +1,8 @@
 #include "stm32f10x.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "OLED.h"
+#include "DHT.h"
 
 //任务优先级
 #define START_TASK_PRIO		1
@@ -47,11 +49,28 @@ void led1_task(void *pvParameters);
     taskEXIT_CRITICAL();            //退出临界区
 }
 //LED0 任务函数
+
+DHT11_Data_TypeDef DHT11_Data;
+static void DHT11_Show(void)
+{
+    if(Read_DHT11(&DHT11_Data) == SUCCESS)
+    {
+        OLED_ShowNum(2, 10, DHT11_Data.humi_int, 2);
+        OLED_ShowString(2, 12, ".");
+        OLED_ShowNum(2, 13, DHT11_Data.humi_deci, 2);
+        
+        OLED_ShowNum(1, 6, DHT11_Data.temp_int, 2);
+        OLED_ShowString(1, 8, ".");
+        OLED_ShowNum(1, 9, DHT11_Data.temp_deci, 1);      
+    }
+}
 void led0_task(void *pvParameters)
 {
      while(1)
      {
-          
+		 OLED_ShowString(1, 1, "temp:");
+		 OLED_ShowString(2, 1, "humi:");
+         DHT11_Show();
      }
 }
 
@@ -61,7 +80,8 @@ int main(void)
      NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组 4 
      
     /*init*/
-    
+    OLED_Init();
+		 DHT11_GPIO_Config();
      //创建开始任务
     xTaskCreate((TaskFunction_t )start_task,            //任务函数
                 (const char*    )"start_task",          //任务名称
