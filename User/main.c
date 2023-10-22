@@ -8,6 +8,7 @@
 #include "Buzzer.h"
 #include "USART.h"
 #include "queue.h"
+
 extern uint16_t AD_Value[4];
 char buffer1[5];
 float mq2ppm;
@@ -120,7 +121,8 @@ void usartREC_task(void *pvParameters)
         if(xQueueReceive(xQueueSerial, receivedData, portMAX_DELAY)) // 等待接收消息
         {
             // receivedData 包含接收到的数据
-            OLED_ShowString(1,2,receivedData);
+            //printf("%s",receivedData);
+            OLED_ShowString(2,1,receivedData);
         }
     }
     

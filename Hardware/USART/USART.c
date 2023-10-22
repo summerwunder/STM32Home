@@ -69,18 +69,20 @@ void USART1_IRQHandler(void)
     static uint8_t RxNum = 0;
     char Prefix[] = "+MQTTSUBRECV:"; // 前缀字符串
     uint8_t PrefixLen = sizeof(Prefix) - 1; // 前缀长度
-    
+                           
     if (USART_GetITStatus(USART1, USART_IT_RXNE) == SET)
     {
         uint8_t TmpData=USART_ReceiveData(USART1);
-        
         if(RxState==0)
         {
+            //printf("%c",TmpData);
             if(TmpData == Prefix[RxNum])
             {
+               // printf("1");
                 RxNum++;            
                 if(RxNum == PrefixLen)
                 {
+                   // printf("3");
                     RxState = 1;
                     RxNum = 0;
                 }
@@ -98,17 +100,19 @@ void USART1_IRQHandler(void)
                  RxState=2;
             }
         }
-        else if(RxState==2)
+        else if(RxState==2&&xQueueSerial!=NULL)
         {
             if (TmpData == '\n')
             {
                 RxState = 0;
                 RxData[RxNum]='\0';
+                //printf("000:\r\n");
                 xQueueSendFromISR(xQueueSerial,
                                  (void*)RxData,
                                   NULL);
                 memset(RxData,0,MAX_RX_DATA_LENGTH);
                 RxNum=0;
+                               
             }
         }       
         USART_ClearITPendingBit(USART1, USART_IT_RXNE);
