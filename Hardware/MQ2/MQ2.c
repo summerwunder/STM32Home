@@ -19,8 +19,8 @@ void MQ2_Init()//MQ2初始化
 	GPIO_InitStructure.GPIO_Speed=GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA,&GPIO_InitStructure);
 	
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 1, ADC_SampleTime_239Cycles5);
 	RCC_ADCCLKConfig(RCC_PCLK2_Div6);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 1, ADC_SampleTime_239Cycles5);
 	ADC_InitTypeDef ADC_InitStructure;
 	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
@@ -52,7 +52,6 @@ void MQ2_Init()//MQ2初始化
 	while (ADC_GetResetCalibrationStatus(ADC1) == SET);
 	ADC_StartCalibration(ADC1);
 	while (ADC_GetCalibrationStatus(ADC1) == SET);
-	
 	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
 }
 	
@@ -105,7 +104,7 @@ void TIM3_Init()
 	
 	NVIC_Initstructure.NVIC_IRQChannel=TIM3_IRQn;
 	NVIC_Initstructure.NVIC_IRQChannelPreemptionPriority=0;
-	NVIC_Initstructure.NVIC_IRQChannelSubPriority=3;
+	NVIC_Initstructure.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstructure.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstructure);
 	

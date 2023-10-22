@@ -10,8 +10,8 @@
       <TargetName>Target 1</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pArmCC>5060960::V5.06 update 7 (build 960)::.\ARMCC</pArmCC>
-      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
+      <pArmCC>5060750::V5.06 update 6 (build 750)::ARMCC</pArmCC>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -186,7 +186,6 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
-            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -340,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Start;.\User;.\Library;.\System;.\Hardware;.\FreeRTOS\include;.\FreeRTOS\portable\RVDS\ARM_CM3;.\Hardware\DHT11;.\Hardware\OLED;.\Hardware\MQ2;.\Hardware\Buzzer;.\Hardware\USART</IncludePath>
+              <IncludePath>.\Start;.\User;.\Library;.\System;.\Hardware;.\FreeRTOS\include;.\FreeRTOS\portable\RVDS\ARM_CM3;.\Hardware\DHT11;.\Hardware\OLED;.\Hardware\MQ2;.\Hardware\Buzzer;.\Hardware\USART;.\Hardware\FAN</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -353,7 +352,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <uClangAs>0</uClangAs>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -718,6 +717,11 @@
               <FileName>USART.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\USART\USART.c</FilePath>
+            </File>
+            <File>
+              <FileName>FAN.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\FAN\FAN.c</FilePath>
             </File>
           </Files>
         </Group>

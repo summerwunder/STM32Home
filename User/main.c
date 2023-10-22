@@ -8,6 +8,7 @@
 #include "Buzzer.h"
 #include "USART.h"
 #include "queue.h"
+#include "FAN.h"
 
 extern uint16_t AD_Value[4];
 char buffer1[5];
@@ -97,7 +98,7 @@ void led0_task(void *pvParameters)
 {
      while(1)
      {
-        /*
+        
 		 OLED_ShowString(1, 1, "temp:");
 		 OLED_ShowString(2, 1, "humi:");
 		 OLED_ShowString(3, 1, "MQ2:");
@@ -106,8 +107,9 @@ void led0_task(void *pvParameters)
 		 OLED_ShowString(3, 6, buffer1);
 		 DHT11_Show();
 		 Buzzer_OFF();
-         */      
-        USART_test();
+		 FAN_Speed(OFF);
+              
+         //USART_test();
      }
 }
 
@@ -146,7 +148,8 @@ int main(void)
 	MQ2_Init();
 	TIM3_Init();
 	Buzzer_Init();
-    USART1_Init();
+	FAN_Init();
+    //USART1_Init();
      //创建开始任务
     xTaskCreate((TaskFunction_t )start_task,            //任务函数
                 (const char*    )"start_task",          //任务名称
