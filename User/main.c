@@ -14,6 +14,15 @@ extern uint16_t AD_Value[4];
 char buffer1[2];
 float mq2ppm;
 int num=0;
+
+
+/*传感器的标志位*/
+#define TEMP_EVENT (1 << 0)
+#define HUMI_EVENT (1 << 1)
+#define SMOKE_EVENT (1 << 2)
+#define CO_EVENT (1 << 3)
+
+
 //任务优先级
 #define START_TASK_PRIO		1
 //任务堆栈大小	
@@ -24,13 +33,49 @@ TaskHandle_t StartTask_Handler;
 void start_task(void *pvParameters);
 
 //任务优先级
-#define LED0_TASK_PRIO		2
+#define LED0_TASK_PRIO		3
 //任务堆栈大小	
 #define LED0_STK_SIZE 		50  
 //任务句柄
 TaskHandle_t LED0Task_Handler;
 //任务函数
 void led0_task(void *pvParameters);
+
+//任务优先级
+#define TEMP_TASK_PRIO		3
+//任务堆栈大小	
+#define TEMP_STK_SIZE 		50  
+//任务句柄
+TaskHandle_t TEMPTask_Handler;
+//任务函数
+void temp_task(void *pvParameters);
+
+//任务优先级
+#define HUMI_TASK_PRIO		3
+//任务堆栈大小	
+#define HUMI_STK_SIZE 		50  
+//任务句柄
+TaskHandle_t HUMITask_Handler;
+//任务函数
+void humi_task(void *pvParameters);
+
+//任务优先级
+#define SMOKE_TASK_PRIO		3
+//任务堆栈大小	
+#define SMOKE_STK_SIZE 		50  
+//任务句柄
+TaskHandle_t SMOKETask_Handler;
+//任务函数
+void smoke_task(void *pvParameters);
+
+//任务优先级
+#define CO_TASK_PRIO		3
+//任务堆栈大小	
+#define CO_STK_SIZE 		50  
+//任务句柄
+TaskHandle_t COTask_Handler;
+//任务函数
+void co_task(void *pvParameters);
 
 
 //任务优先级
@@ -44,9 +89,7 @@ void usartREC_task(void *pvParameters);
 
 
 
-/*这是串口接收数据的消息队列*/
-
-
+/*串口接收数据的消息队列*/
 QueueHandle_t xQueueSerial;
 
 
@@ -65,6 +108,38 @@ void start_task(void *pvParameters)
                 (UBaseType_t    )LED0_TASK_PRIO,    
                 (TaskHandle_t*  )&LED0Task_Handler); 
     
+    //湿度任务
+    xTaskCreate((TaskFunction_t )humi_task,         
+                (const char*    )"humi_task",       
+                (uint16_t       )HUMI_STK_SIZE, 
+                (void*          )NULL,  
+                (UBaseType_t    )HUMI_TASK_PRIO,    
+                (TaskHandle_t*  )&HUMITask_Handler); 
+
+    //温度任务
+    xTaskCreate((TaskFunction_t )temp_task,         
+                (const char*    )"temp_task",       
+                (uint16_t       )TEMP_STK_SIZE, 
+                (void*          )NULL,  
+                (UBaseType_t    )TEMP_TASK_PRIO,    
+                (TaskHandle_t*  )&TEMPTask_Handler); 
+
+    //烟雾任务
+    xTaskCreate((TaskFunction_t )smoke_task,         
+                (const char*    )"smoke_task",       
+                (uint16_t       )SMOKE_STK_SIZE, 
+                (void*          )NULL,  
+                (UBaseType_t    )SMOKE_TASK_PRIO,    
+                (TaskHandle_t*  )&SMOKETask_Handler); 
+
+
+    //一氧化碳任务
+    xTaskCreate((TaskFunction_t )co_task,         
+                (const char*    )"co_task",       
+                (uint16_t       )CO_STK_SIZE, 
+                (void*          )NULL,  
+                (UBaseType_t    )CO_TASK_PRIO,    
+                (TaskHandle_t*  )&COTask_Handler);  
                 
      //创建串口接收任务
     xTaskCreate((TaskFunction_t )usartREC_task,         
@@ -110,7 +185,41 @@ void led0_task(void *pvParameters)
     
      }
 }
+void temp_task(void *pvParameters)
+{
+    while(1)
+    {
+        
+    }
+    
+}
 
+void humi_task(void *pvParameters)
+{
+    while(1)
+    {
+        
+    }
+    
+}
+
+void smoke_task(void *pvParameters)
+{
+    while(1)
+    {
+        
+    }
+    
+}
+
+void co_task(void *pvParameters)
+{
+    while(1)
+    {
+        
+    }
+    
+}
 
 void usartREC_task(void *pvParameters)
 {
