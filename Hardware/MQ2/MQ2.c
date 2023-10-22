@@ -8,7 +8,7 @@ uint16_t AD_Value[4];
 uint16_t times;
 
 void MQ2_Init()//MQ2≥ı ºªØ
-	{
+{
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1,ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);

@@ -7,6 +7,7 @@
 #include "Delay.h"
 #include "Buzzer.h"
 #include "USART.h"
+#include "queue.h"
 extern uint16_t AD_Value[4];
 char buffer1[5];
 float mq2ppm;
@@ -29,21 +30,31 @@ TaskHandle_t LED0Task_Handler;
 //任务函数
 void led0_task(void *pvParameters);
 
-/*
+
 //任务优先级
-#define LED1_TASK_PRIO		3
+#define USARTREC_TASK_PRIO		7
 //任务堆栈大小	
-#define LED1_STK_SIZE 		50  
+#define USARTREC_STK_SIZE 		50  
 //任务句柄
-TaskHandle_t LED1Task_Handler;
+TaskHandle_t USARTRECTask_Handler;
 //任务函数
-void led1_task(void *pvParameters);
-*/
+void usartREC_task(void *pvParameters);
+
+
+
+/*这是串口接收数据的消息队列*/
+
+
+QueueHandle_t xQueueSerial;
+
+
 static void USART_test(void);
  
 void start_task(void *pvParameters)
 {
-     taskENTER_CRITICAL();           //进入临界区
+    taskENTER_CRITICAL();           //进入临界区
+   
+    xQueueSerial = xQueueCreate(5, sizeof(char[MAX_RX_DATA_LENGTH]));
     //创建LED0任务
     xTaskCreate((TaskFunction_t )led0_task,         
                 (const char*    )"led0_task",       
@@ -52,6 +63,15 @@ void start_task(void *pvParameters)
                 (UBaseType_t    )LED0_TASK_PRIO,    
                 (TaskHandle_t*  )&LED0Task_Handler); 
     
+                
+     //创建串口接收任务
+    xTaskCreate((TaskFunction_t )usartREC_task,         
+                (const char*    )"uasrtREC_task",       
+                (uint16_t       )USARTREC_STK_SIZE , 
+                (void*          )NULL,  
+                (UBaseType_t    )USARTREC_TASK_PRIO,    
+                (TaskHandle_t*  )&USARTRECTask_Handler); 
+                
     vTaskDelete(StartTask_Handler); //删除开始任务
     taskEXIT_CRITICAL();            //退出临界区
 }
@@ -74,22 +94,37 @@ static void DHT11_Show(void)
 
 void led0_task(void *pvParameters)
 {
-
      while(1)
      {
-        
+        /*
 		 OLED_ShowString(1, 1, "temp:");
 		 OLED_ShowString(2, 1, "humi:");
 		 OLED_ShowString(3, 1, "MQ2:");
 		 mq2ppm = MQ2_GetPPM();//将vel字符串类型转换为数字存储到数组
 		 sprintf(buffer1,"%f",mq2ppm);
-		OLED_ShowString(3, 6, buffer1);
+		 OLED_ShowString(3, 6, buffer1);
 		 DHT11_Show();
 		 Buzzer_OFF();
-         
-      
-        // USART_test();
+         */      
+        USART_test();
      }
+}
+
+
+void usartREC_task(void *pvParameters)
+{
+    char receivedData[MAX_RX_DATA_LENGTH];
+    
+    while (1)
+    {
+        if(xQueueReceive(xQueueSerial, receivedData, portMAX_DELAY)) // 等待接收消息
+        {
+            // receivedData 包含接收到的数据
+            OLED_ShowString(1,2,receivedData);
+        }
+    }
+    
+       
 }
 
 static void USART_test(void)
@@ -97,13 +132,12 @@ static void USART_test(void)
      num++;
      OLED_ShowNum(1,1,num,4);
      printf("hello world\r\n");
-     vTaskDelay(500);
+     vTaskDelay(2500);
 }
 int main(void)
 {  
      
-     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组 4 
-     
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组 4      
     /*init*/
     OLED_Init();
 	DHT11_GPIO_Config();
