@@ -11,7 +11,7 @@
 #include "FAN.h"
 
 extern uint16_t AD_Value[4];
-char buffer1[5];
+char buffer1[2];
 float mq2ppm;
 int num=0;
 //任务优先级
@@ -84,13 +84,10 @@ static void DHT11_Show(void)
 {
     if(Read_DHT11(&DHT11_Data) == SUCCESS)
     {
-        OLED_ShowNum(2, 10, DHT11_Data.humi_int, 2);
-        OLED_ShowString(2, 12, ".");
-        OLED_ShowNum(2, 13, DHT11_Data.humi_deci, 2);
-        
+		
+        OLED_ShowNum(2, 6, DHT11_Data.humi_int, 2);
         OLED_ShowNum(1, 6, DHT11_Data.temp_int, 2);
-        OLED_ShowString(1, 8, ".");
-        OLED_ShowNum(1, 9, DHT11_Data.temp_deci, 1);      
+             
     }
 }
 
@@ -103,11 +100,11 @@ void led0_task(void *pvParameters)
 		 OLED_ShowString(2, 1, "humi:");
 		 OLED_ShowString(3, 1, "MQ2:");
 		 mq2ppm = MQ2_GetPPM();//将vel字符串类型转换为数字存储到数组
-		 sprintf(buffer1,"%f",mq2ppm);
-		 OLED_ShowString(3, 6, buffer1);
+		 sprintf(buffer1,"%.2f",mq2ppm);
+		 OLED_ShowString(3, 5, buffer1);
 		 DHT11_Show();
 		 Buzzer_OFF();
-		 FAN_Speed(OFF);
+		 FAN_Speed(FAN_OFF);
               
          //USART_test();
      }
