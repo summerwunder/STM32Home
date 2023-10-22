@@ -8,6 +8,8 @@
 #include "Buzzer.h"
 #include "USART.h"
 extern uint16_t AD_Value[4];
+char buffer1[5];
+float mq2ppm;
 int num=0;
 //任务优先级
 #define START_TASK_PRIO		1
@@ -75,16 +77,18 @@ void led0_task(void *pvParameters)
 
      while(1)
      {
-/*        
+        
 		 OLED_ShowString(1, 1, "temp:");
 		 OLED_ShowString(2, 1, "humi:");
 		 OLED_ShowString(3, 1, "MQ2:");
-		 OLED_ShowNum(3, 5,MQ2_GetPPM(),4);
+		 mq2ppm = MQ2_GetPPM();//将vel字符串类型转换为数字存储到数组
+		 sprintf(buffer1,"%f",mq2ppm);
+		OLED_ShowString(3, 6, buffer1);
 		 DHT11_Show();
 		 Buzzer_OFF();
          
-*/       
-         USART_test();
+      
+        // USART_test();
      }
 }
 

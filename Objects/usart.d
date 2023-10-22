@@ -1,7 +1,7 @@
 .\objects\usart.o: Hardware\USART\USART.c
 .\objects\usart.o: .\Start\stm32f10x.h
 .\objects\usart.o: .\Start\core_cm3.h
-.\objects\usart.o: E:\MDK536\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\usart.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\usart.o: .\Start\system_stm32f10x.h
 .\objects\usart.o: .\User\stm32f10x_conf.h
 .\objects\usart.o: .\Library\stm32f10x_adc.h
@@ -29,5 +29,5 @@
 .\objects\usart.o: .\Library\stm32f10x_wwdg.h
 .\objects\usart.o: .\Library\misc.h
 .\objects\usart.o: Hardware\USART\USART.h
-.\objects\usart.o: E:\MDK536\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\usart.o: E:\MDK536\ARM\ARMCC\Bin\..\include\string.h
+.\objects\usart.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\usart.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\string.h

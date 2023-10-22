@@ -3,7 +3,7 @@
 #include "Delay.h"
 #include "math.h"
 
-float R0;//元件在洁净空气中的阻值
+float R0=6;//元件在洁净空气中的阻值
 uint16_t AD_Value[4];
 uint16_t times;
 
@@ -19,8 +19,8 @@ void MQ2_Init()//MQ2初始化
 	GPIO_InitStructure.GPIO_Speed=GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA,&GPIO_InitStructure);
 	
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 1, ADC_SampleTime_55Cycles5);
-	
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 1, ADC_SampleTime_239Cycles5);
+	RCC_ADCCLKConfig(RCC_PCLK2_Div6);
 	ADC_InitTypeDef ADC_InitStructure;
 	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
@@ -77,11 +77,14 @@ void TIM3_IRQHandler(void){
 float MQ2_GetPPM()
 {
 	u16 x;
-	x=Get_ADC_Average(10);
+	x=Get_ADC_Average(30);
 	float Vr1=3.3f * x / 4096.f;
 	Vr1=((float)((int)((Vr1+0.005)*100)))/100;
 	float RS=(3.3f-Vr1)/ Vr1 * RL;
-	R0=RS/pow(CAL_PPM / 613.9f,1 / -2.074f);
+	if(times<6) // 获取系统执行时间，3s前进行校准
+    {
+		  R0 = RS / pow(CAL_PPM / 613.9f, 1 / -2.074f);
+    } 
 	float ppm=613.9f * pow(RS/R0,-2.074f);
 	return ppm;
 }
@@ -92,7 +95,7 @@ void TIM3_Init()
 	NVIC_InitTypeDef NVIC_Initstructure;
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE);
 	
-	TIM_TimeBaseInitsture.TIM_Period=10000-1;
+	TIM_TimeBaseInitsture.TIM_Period=5000-1;
 	TIM_TimeBaseInitsture.TIM_Prescaler=7200-1;
 	TIM_TimeBaseInitsture.TIM_CounterMode=TIM_CounterMode_Up;
 	TIM_TimeBaseInitsture.TIM_ClockDivision=TIM_CKD_DIV1;
