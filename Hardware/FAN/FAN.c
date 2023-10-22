@@ -41,7 +41,7 @@ void FAN_SetAngle(float Angle)
 	FAN_Setcompare2(Angle/180*2000+500);
 }
 
-void FAN_Speed(u16 t)
+void FAN_Speed(uint16_t t)
 {
 	FAN_SetAngle(80*t);
 }

@@ -75,14 +75,11 @@ void USART1_IRQHandler(void)
         uint8_t TmpData=USART_ReceiveData(USART1);
         if(RxState==0)
         {
-            //printf("%c",TmpData);
             if(TmpData == Prefix[RxNum])
             {
-               // printf("1");
                 RxNum++;            
                 if(RxNum == PrefixLen)
                 {
-                   // printf("3");
                     RxState = 1;
                     RxNum = 0;
                 }
@@ -106,7 +103,6 @@ void USART1_IRQHandler(void)
             {
                 RxState = 0;
                 RxData[RxNum]='\0';
-                //printf("000:\r\n");
                 xQueueSendFromISR(xQueueSerial,
                                  (void*)RxData,
                                   NULL);

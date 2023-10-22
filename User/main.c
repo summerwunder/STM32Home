@@ -9,7 +9,7 @@
 #include "USART.h"
 #include "queue.h"
 #include "FAN.h"
-
+#include "ESP8266.h"
 extern uint16_t AD_Value[4];
 char buffer1[5];
 float mq2ppm;
@@ -98,7 +98,7 @@ void led0_task(void *pvParameters)
 {
      while(1)
      {
-        
+        /*
 		 OLED_ShowString(1, 1, "temp:");
 		 OLED_ShowString(2, 1, "humi:");
 		 OLED_ShowString(3, 1, "MQ2:");
@@ -107,9 +107,10 @@ void led0_task(void *pvParameters)
 		 OLED_ShowString(3, 6, buffer1);
 		 DHT11_Show();
 		 Buzzer_OFF();
-		 FAN_Speed(OFF);
-              
-         //USART_test();
+		 FAN_Speed(FAN_OFF);
+        */      
+         USART_test();
+         vTaskDelay(2500);
      }
 }
 
@@ -120,23 +121,20 @@ void usartREC_task(void *pvParameters)
     
     while (1)
     {
-        if(xQueueReceive(xQueueSerial, receivedData, portMAX_DELAY)) // 等待接收消息
+        if(xQueueReceive(xQueueSerial, receivedData,portMAX_DELAY)) // 等待接收消息
         {
             // receivedData 包含接收到的数据
             //printf("%s",receivedData);
             OLED_ShowString(2,1,receivedData);
-        }
-    }
-    
-       
+        }       
+    }    
 }
 
 static void USART_test(void)
 {
      num++;
      OLED_ShowNum(1,1,num,4);
-     printf("hello world\r\n");
-     vTaskDelay(2500);
+     ESP8266_SendData(40,20,90.2,39.4);
 }
 int main(void)
 {  
@@ -144,12 +142,16 @@ int main(void)
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组 4      
     /*init*/
     OLED_Init();
+    USART1_Init();
 	DHT11_GPIO_Config();
 	MQ2_Init();
 	TIM3_Init();
 	Buzzer_Init();
 	FAN_Init();
-    //USART1_Init();
+    OLED_ShowNum(3,1,21,2);
+    ESP8266_Init();
+    OLED_ShowNum(3,1,31,2);
+    
      //创建开始任务
     xTaskCreate((TaskFunction_t )start_task,            //任务函数
                 (const char*    )"start_task",          //任务名称
