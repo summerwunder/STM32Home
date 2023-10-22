@@ -4,9 +4,11 @@
 #include "OLED.h"
 #include "DHT.h"
 #include "MQ2.h"
+#include "Delay.h"
 #include "Buzzer.h"
-
+#include "USART.h"
 extern uint16_t AD_Value[4];
+int num=0;
 //任务优先级
 #define START_TASK_PRIO		1
 //任务堆栈大小	
@@ -35,9 +37,9 @@ TaskHandle_t LED1Task_Handler;
 //任务函数
 void led1_task(void *pvParameters);
 */
-
+static void USART_test(void);
  
- void start_task(void *pvParameters)
+void start_task(void *pvParameters)
 {
      taskENTER_CRITICAL();           //进入临界区
     //创建LED0任务
@@ -65,25 +67,34 @@ static void DHT11_Show(void)
         OLED_ShowNum(1, 6, DHT11_Data.temp_int, 2);
         OLED_ShowString(1, 8, ".");
         OLED_ShowNum(1, 9, DHT11_Data.temp_deci, 1);      
-    }else
-	{
-		OLED_ShowString(4,1,"hello");
-	}
+    }
 }
+
 void led0_task(void *pvParameters)
 {
+
      while(1)
      {
-
+/*        
 		 OLED_ShowString(1, 1, "temp:");
 		 OLED_ShowString(2, 1, "humi:");
 		 OLED_ShowString(3, 1, "MQ2:");
 		 OLED_ShowNum(3, 5,MQ2_GetPPM(),4);
 		 DHT11_Show();
 		 Buzzer_OFF();
+         
+*/       
+         USART_test();
      }
 }
 
+static void USART_test(void)
+{
+     num++;
+     OLED_ShowNum(1,1,num,4);
+     printf("hello world\r\n");
+     vTaskDelay(500);
+}
 int main(void)
 {  
      
@@ -95,6 +106,7 @@ int main(void)
 	MQ2_Init();
 	TIM3_Init();
 	Buzzer_Init();
+    USART1_Init();
      //创建开始任务
     xTaskCreate((TaskFunction_t )start_task,            //任务函数
                 (const char*    )"start_task",          //任务名称

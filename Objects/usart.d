@@ -29,3 +29,5 @@
 .\objects\usart.o: .\Library\stm32f10x_wwdg.h
 .\objects\usart.o: .\Library\misc.h
 .\objects\usart.o: Hardware\USART\USART.h
+.\objects\usart.o: E:\MDK536\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\usart.o: E:\MDK536\ARM\ARMCC\Bin\..\include\string.h
