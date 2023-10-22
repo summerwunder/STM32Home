@@ -32,6 +32,7 @@
 ".\objects\dht.o"
 ".\objects\buzzer.o"
 ".\objects\mq2.o"
+".\objects\usart.o"
 ".\objects\croutine.o"
 ".\objects\event_groups.o"
 ".\objects\list.o"
