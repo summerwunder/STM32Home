@@ -1,7 +1,7 @@
 .\objects\fan.o: Hardware\FAN\FAN.c
 .\objects\fan.o: .\Start\stm32f10x.h
 .\objects\fan.o: .\Start\core_cm3.h
-.\objects\fan.o: E:\MDK536\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\fan.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\fan.o: .\Start\system_stm32f10x.h
 .\objects\fan.o: .\User\stm32f10x_conf.h
 .\objects\fan.o: .\Library\stm32f10x_adc.h

@@ -1,7 +1,7 @@
 .\objects\mq7.o: Hardware\MQ7\MQ7.c
 .\objects\mq7.o: .\Start\stm32f10x.h
 .\objects\mq7.o: .\Start\core_cm3.h
-.\objects\mq7.o: E:\MDK536\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\mq7.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\mq7.o: .\Start\system_stm32f10x.h
 .\objects\mq7.o: .\User\stm32f10x_conf.h
 .\objects\mq7.o: .\Library\stm32f10x_adc.h

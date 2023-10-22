@@ -41,7 +41,7 @@ TaskHandle_t StartTask_Handler;
 void start_task(void *pvParameters);
 
 //任务优先级
-#define LED0_TASK_PRIO		3
+#define LED0_TASK_PRIO		5
 //任务堆栈大小	
 #define LED0_STK_SIZE 		50  
 //任务句柄
@@ -180,19 +180,18 @@ void led0_task(void *pvParameters)
 {
      while(1)
      {
-
 		 OLED_ShowString(1, 1, "temp:");
 		 OLED_ShowString(2, 1, "humi:");
 		 OLED_ShowString(3, 1, "MQ2:");
+		 DHT11_Show();
 		 smokeData = MQ2_GetPPM();//将vel字符串类型转换为数字存储到数组
 		 sprintf(buffer1,"%.2lf",smokeData);
-		 OLED_ShowString(3, 5, buffer1);
-		 DHT11_Show();
+		 OLED_ShowString(3, 5, buffer1);		
 		 Buzzer_OFF();
 		 FAN_Speed(FAN_OFF);  
-         USART_test();
-         vTaskDelay(2500);
-    
+		 num++;
+		 OLED_ShowNum(4,1,num,5);
+		 OLED_ShowNum(4,7,AD_GetValue(ADC_Channel_4),5);
      }
 }
 void temp_task(void *pvParameters)
@@ -253,7 +252,7 @@ static void USART_test(void)
 {
      num++;
      OLED_ShowNum(1,1,num,4);
-     ESP8266_SendData(40,20,90.2,39.4);
+     //ESP8266_SendData(40,20,90.2,39.4);
 }
 int main(void)
 {  
@@ -261,17 +260,15 @@ int main(void)
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组 4      
     /*init*/
     OLED_Init();
-    USART1_Init();
+    //USART1_Init();
 	DHT11_GPIO_Config();
 	MQ2_Init();
-    MQ7_Init();
+    //MQ7_Init();
 	TIM3_Init();
-	Buzzer_Init();
-	FAN_Init();
-    OLED_ShowNum(3,1,21,2);
-    ESP8266_Init();
-    OLED_ShowNum(3,1,31,2);
-    
+//	Buzzer_Init();
+//	FAN_Init();
+    //ESP8266_Init();
+
      //创建开始任务
     xTaskCreate((TaskFunction_t )start_task,            //任务函数
                 (const char*    )"start_task",          //任务名称

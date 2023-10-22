@@ -20,7 +20,7 @@ void MQ2_Init()//MQ2初始化
 	GPIO_Init(GPIOA,&GPIO_InitStructure);
 	
 	RCC_ADCCLKConfig(RCC_PCLK2_Div6);
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 1, ADC_SampleTime_239Cycles5);
+	//ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 1, ADC_SampleTime_239Cycles5);
 	ADC_InitTypeDef ADC_InitStructure;
 	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
@@ -54,14 +54,22 @@ void MQ2_Init()//MQ2初始化
 	while (ADC_GetCalibrationStatus(ADC1) == SET);
 	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
 }
-	
+
+uint16_t AD_GetValue(uint8_t ADC_Channel)
+{
+	ADC_RegularChannelConfig(ADC1, ADC_Channel, 1, ADC_SampleTime_239Cycles5);
+	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+	while (ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == RESET);
+	return ADC_GetConversionValue(ADC1);
+}
+
 
 u16 Get_ADC_Average(u8 times)//利用AD返回值做计算，times为次数
 {
 	u32 temp_val=0;
 	u8 t;
 	for(t=0;t<times;t++){
-		temp_val+=AD_Value[0];
+		temp_val+=AD_GetValue(ADC_Channel_4);
 		Delay_ms(5);
 	}
 	return temp_val/times;

@@ -1,7 +1,7 @@
 .\objects\dht.o: Hardware\DHT11\DHT.c
 .\objects\dht.o: .\Start\stm32f10x.h
 .\objects\dht.o: .\Start\core_cm3.h
-.\objects\dht.o: E:\MDK536\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\dht.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\dht.o: .\Start\system_stm32f10x.h
 .\objects\dht.o: .\User\stm32f10x_conf.h
 .\objects\dht.o: .\Library\stm32f10x_adc.h
