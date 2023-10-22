@@ -268,9 +268,7 @@ int main(void)
 	TIM3_Init();
 	Buzzer_Init();
 	FAN_Init();
-    OLED_ShowNum(3,1,21,2);
     ESP8266_Init();
-    OLED_ShowNum(3,1,31,2);
     
      //创建开始任务
     xTaskCreate((TaskFunction_t )start_task,            //任务函数
