@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Start;.\User;.\Library;.\System;.\Hardware;.\FreeRTOS\include;.\FreeRTOS\portable\RVDS\ARM_CM3;.\Hardware\DHT11;.\Hardware\OLED;.\Hardware\MQ2;.\Hardware\Buzzer;.\Hardware\USART;.\Hardware\FAN;.\Hardware\ESP8266</IncludePath>
+              <IncludePath>.\Start;.\User;.\Library;.\System;.\Hardware;.\FreeRTOS\include;.\FreeRTOS\portable\RVDS\ARM_CM3;.\Hardware\DHT11;.\Hardware\OLED;.\Hardware\MQ2;.\Hardware\Buzzer;.\Hardware\USART;.\Hardware\FAN;.\Hardware\ESP8266;.\Hardware\MQ7</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -728,6 +728,11 @@
               <FileName>ESP8266.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\ESP8266\ESP8266.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQ7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\MQ7\MQ7.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -35,6 +35,7 @@
 ".\objects\usart.o"
 ".\objects\fan.o"
 ".\objects\esp8266.o"
+".\objects\mq7.o"
 ".\objects\croutine.o"
 ".\objects\event_groups.o"
 ".\objects\list.o"

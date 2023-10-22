@@ -11,7 +11,7 @@
 #include "FAN.h"
 #include "ESP8266.h"
 #include "event_groups.h"
-
+#include "MQ7.h"
 extern uint16_t AD_Value[4];
 char buffer1[2];
 
@@ -264,6 +264,7 @@ int main(void)
     USART1_Init();
 	DHT11_GPIO_Config();
 	MQ2_Init();
+    MQ7_Init();
 	TIM3_Init();
 	Buzzer_Init();
 	FAN_Init();
