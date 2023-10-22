@@ -10,9 +10,17 @@
 #include "queue.h"
 #include "FAN.h"
 #include "ESP8266.h"
+#include "event_groups.h"
+
 extern uint16_t AD_Value[4];
 char buffer1[2];
-float mq2ppm;
+
+DHT11_Data_TypeDef DHT11_Data;//温湿度传感器数据
+double smokeData;
+uint8_t tempData;
+uint8_t humiData;
+double coData;
+    
 int num=0;
 
 
@@ -91,7 +99,8 @@ void usartREC_task(void *pvParameters);
 
 /*串口接收数据的消息队列*/
 QueueHandle_t xQueueSerial;
-
+/*串口发送数据的事件*/
+EventGroupHandle_t xEventGroupSensorData;
 
 static void USART_test(void);
  
@@ -100,6 +109,7 @@ void start_task(void *pvParameters)
     taskENTER_CRITICAL();           //进入临界区
    
     xQueueSerial = xQueueCreate(5, sizeof(char[MAX_RX_DATA_LENGTH]));
+    xEventGroupSensorData=xEventGroupCreate();
     //创建LED0任务
     xTaskCreate((TaskFunction_t )led0_task,         
                 (const char*    )"led0_task",       
@@ -154,7 +164,7 @@ void start_task(void *pvParameters)
 }
 //LED0 任务函数
 
-DHT11_Data_TypeDef DHT11_Data;
+
 static void DHT11_Show(void)
 {
     if(Read_DHT11(&DHT11_Data) == SUCCESS)
@@ -174,8 +184,8 @@ void led0_task(void *pvParameters)
 		 OLED_ShowString(1, 1, "temp:");
 		 OLED_ShowString(2, 1, "humi:");
 		 OLED_ShowString(3, 1, "MQ2:");
-		 mq2ppm = MQ2_GetPPM();//将vel字符串类型转换为数字存储到数组
-		 sprintf(buffer1,"%.2f",mq2ppm);
+		 smokeData = MQ2_GetPPM();//将vel字符串类型转换为数字存储到数组
+		 sprintf(buffer1,"%.2lf",smokeData);
 		 OLED_ShowString(3, 5, buffer1);
 		 DHT11_Show();
 		 Buzzer_OFF();
@@ -189,7 +199,10 @@ void temp_task(void *pvParameters)
 {
     while(1)
     {
-        
+        if(Read_DHT11(&DHT11_Data) == SUCCESS)
+        {
+            //xEventGroupSetBits(xEventGroupSensorData,
+        }
     }
     
 }
