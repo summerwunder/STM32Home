@@ -5,6 +5,7 @@
 #include "DHT.h"
 #include "MQ2.h"
 #include "Delay.h"
+#include "string.h"
 #include "Buzzer.h"
 #include "USART.h"
 #include "queue.h"
@@ -41,7 +42,7 @@ TaskHandle_t StartTask_Handler;
 void start_task(void *pvParameters);
 
 //任务优先级
-#define LED0_TASK_PRIO		3
+#define LED0_TASK_PRIO		5
 //任务堆栈大小	
 #define LED0_STK_SIZE 		50  
 //任务句柄
@@ -168,11 +169,9 @@ void start_task(void *pvParameters)
 static void DHT11_Show(void)
 {
     if(Read_DHT11(&DHT11_Data) == SUCCESS)
-    {
-		
+    {		
         OLED_ShowNum(2, 6, DHT11_Data.humi_int, 2);
-        OLED_ShowNum(1, 6, DHT11_Data.temp_int, 2);
-             
+        OLED_ShowNum(1, 6, DHT11_Data.temp_int, 2);            
     }
 }
 
@@ -180,7 +179,7 @@ void led0_task(void *pvParameters)
 {
      while(1)
      {
-
+        /*
 		 OLED_ShowString(1, 1, "temp:");
 		 OLED_ShowString(2, 1, "humi:");
 		 OLED_ShowString(3, 1, "MQ2:");
@@ -189,20 +188,21 @@ void led0_task(void *pvParameters)
 		 OLED_ShowString(3, 5, buffer1);
 		 DHT11_Show();
 		 Buzzer_OFF();
-		 FAN_Speed(FAN_OFF);  
+		 FAN_Speed(FAN_OFF); 
+        */         
          USART_test();
-         vTaskDelay(2500);
-    
+         vTaskDelay(2500);   
      }
 }
 void temp_task(void *pvParameters)
 {
     while(1)
     {
+        /*
         if(Read_DHT11(&DHT11_Data) == SUCCESS)
         {
             //xEventGroupSetBits(xEventGroupSensorData,
-        }
+        */
     }
     
 }
@@ -239,13 +239,63 @@ void usartREC_task(void *pvParameters)
     char receivedData[MAX_RX_DATA_LENGTH];
     
     while (1)
-    {
+    {                                                                                                                        
         if(xQueueReceive(xQueueSerial, receivedData,portMAX_DELAY)) // 等待接收消息
-        {
-            // receivedData 包含接收到的数据
-            //printf("%s",receivedData);
-            OLED_ShowString(2,1,receivedData);
-        }       
+        {            
+            OLED_ShowString(4,1,receivedData);
+            if(strstr(receivedData,"LED_ON"))
+            {
+                
+                OLED_ShowString(2,1,"LED_ON");
+                
+            }
+            else if(strstr(receivedData,"LED_OFF"))
+            {
+                
+                OLED_ShowString(2,1,"LED_OFF");
+                
+            }
+            else if(strstr(receivedData,"BUZZER_OFF"))
+            {
+                
+                OLED_ShowString(2,1,"BUZZER_OFF");
+                
+            }
+            else if(strstr(receivedData,"BUZZER_ON"))
+            {
+                
+                OLED_ShowString(2,1,"BUZZER_ON");
+                
+            }
+            else if(strstr(receivedData,"FAN_OFF"))
+            {
+                
+                OLED_ShowString(2,1,"FAN_OFF");
+                
+            }
+            else if(strstr(receivedData,"FAN_LOW"))
+            {
+                
+                OLED_ShowString(2,1,"FAN_LOW");
+                
+            }
+            else if(strstr(receivedData,"FAN_MEDIUM"))
+            {
+                
+                OLED_ShowString(2,1,"FAN_MEDIUM");
+                
+            }
+            else if(strstr(receivedData,"FAN_HIGH"))
+            {
+                
+                OLED_ShowString(2,1,"FAN_HIGH");
+                
+            }
+            else
+            {
+                
+            }
+        }     
     }    
 }
 
@@ -253,7 +303,8 @@ static void USART_test(void)
 {
      num++;
      OLED_ShowNum(1,1,num,4);
-     ESP8266_SendData(40,20,90.2,39.4);
+     printf("hello\r\n");
+     //ESP8266_SendData(40,20,90.2,39.4);
 }
 int main(void)
 {  
@@ -268,7 +319,7 @@ int main(void)
 	TIM3_Init();
 	Buzzer_Init();
 	FAN_Init();
-    ESP8266_Init();
+    //ESP8266_Init();
     
      //创建开始任务
     xTaskCreate((TaskFunction_t )start_task,            //任务函数
