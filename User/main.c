@@ -3,7 +3,6 @@
 #include "task.h"
 #include "OLED.h"
 #include "DHT.h"
-#include "MQ2.h"
 #include "Delay.h"
 #include "string.h"
 #include "Buzzer.h"
@@ -12,7 +11,8 @@
 #include "FAN.h"
 #include "ESP8266.h"
 #include "event_groups.h"
-#include "MQ7.h"
+#include "MQ.h"
+#include "LED.h"
 //extern uint16_t AD_Value[2];
 char buffer1[4];
 char buffer2[4];
@@ -191,9 +191,12 @@ void led0_task(void *pvParameters)
 		 coData=MQ7_GetPPM();
 		 sprintf(buffer2,"%.2lf",coData);
 		 OLED_ShowString(4, 5, buffer2);
+		 LED_ON();
 		 Buzzer_OFF();
 		 FAN_Speed(FAN_OFF);  
-		 num++;
+//		 num++;
+//		 OLED_ShowNum(3, 6, AD_Value[0], 4);
+//		 OLED_ShowNum(4, 6, AD_Value[1], 4);
                  
 //         USART_test();
 //         vTaskDelay(2500);   
@@ -319,11 +322,10 @@ int main(void)
     OLED_Init();
     //USART1_Init();
 	DHT11_GPIO_Config();
-	//MQ2_Init();
-    MQ7_Init();
+	MQ_Init();
 	TIM3_Init();
-//	Buzzer_Init();
-//	FAN_Init();
+	LED_Init();
+	Buzzer_Init();
     //ESP8266_Init();
 
 	Buzzer_Init();

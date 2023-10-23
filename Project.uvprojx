@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Start;.\User;.\Library;.\System;.\Hardware;.\FreeRTOS\include;.\FreeRTOS\portable\RVDS\ARM_CM3;.\Hardware\DHT11;.\Hardware\OLED;.\Hardware\MQ2;.\Hardware\Buzzer;.\Hardware\USART;.\Hardware\FAN;.\Hardware\ESP8266;.\Hardware\MQ7</IncludePath>
+              <IncludePath>.\Start;.\User;.\Library;.\System;.\Hardware;.\FreeRTOS\include;.\FreeRTOS\portable\RVDS\ARM_CM3;.\Hardware\DHT11;.\Hardware\OLED;.\Hardware\Buzzer;.\Hardware\USART;.\Hardware\FAN;.\Hardware\ESP8266;.\Hardware\MQ;.\Hardware\LED</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -709,11 +709,6 @@
               <FilePath>.\Hardware\Buzzer\Buzzer.c</FilePath>
             </File>
             <File>
-              <FileName>MQ2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MQ2\MQ2.c</FilePath>
-            </File>
-            <File>
               <FileName>USART.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\USART\USART.c</FilePath>
@@ -729,9 +724,14 @@
               <FilePath>.\Hardware\ESP8266\ESP8266.c</FilePath>
             </File>
             <File>
-              <FileName>MQ7.c</FileName>
+              <FileName>MQ.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\MQ7\MQ7.c</FilePath>
+              <FilePath>.\Hardware\MQ\MQ.c</FilePath>
+            </File>
+            <File>
+              <FileName>LED.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\LED\LED.c</FilePath>
             </File>
           </Files>
         </Group>

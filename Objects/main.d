@@ -40,7 +40,6 @@
 .\objects\main.o: .\FreeRTOS\include\list.h
 .\objects\main.o: .\Hardware\OLED\OLED.h
 .\objects\main.o: .\Hardware\DHT11\DHT.h
-.\objects\main.o: .\Hardware\MQ2\MQ2.h
 .\objects\main.o: .\System\Delay.h
 .\objects\main.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\main.o: .\Hardware\Buzzer\Buzzer.h
@@ -52,4 +51,5 @@
 .\objects\main.o: .\Hardware\ESP8266\ESP8266.h
 .\objects\main.o: .\FreeRTOS\include\event_groups.h
 .\objects\main.o: .\FreeRTOS\include\timers.h
-.\objects\main.o: .\Hardware\MQ7\MQ7.h
+.\objects\main.o: .\Hardware\MQ\MQ.h
+.\objects\main.o: .\Hardware\LED\LED.h

@@ -1,5 +1,5 @@
 #include "stm32f10x.h"                  // Device header
-#include "MQ2.h"
+#include "MQ.h"
 #include "Delay.h"
 #include "math.h"
 
@@ -7,29 +7,30 @@ float R0=6;//元件在洁净空气中的阻值
 uint16_t AD_Value[2];
 uint16_t times;
 
-void MQ2_Init()//MQ2初始化
+void MQ_Init()//MQ2初始化
 {
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1,ENABLE);
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
 	
-	GPIO_InitTypeDef GPIO_InitStructure;
-	GPIO_InitStructure.GPIO_Mode=GPIO_Mode_AIN;
-	GPIO_InitStructure.GPIO_Pin=GPIO_Pin_4|GPIO_Pin_6;
-	GPIO_InitStructure.GPIO_Speed=GPIO_Speed_50MHz;
-	GPIO_Init(GPIOA,&GPIO_InitStructure);
-	
 	RCC_ADCCLKConfig(RCC_PCLK2_Div6);
+	
+	GPIO_InitTypeDef GPIO_InitStructure;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_6;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 1, ADC_SampleTime_239Cycles5);
-	//ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 2, ADC_SampleTime_239Cycles5);
-
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 2, ADC_SampleTime_239Cycles5);
+		
 	ADC_InitTypeDef ADC_InitStructure;
 	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
 	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
 	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
 	ADC_InitStructure.ADC_ScanConvMode = ENABLE;
-	ADC_InitStructure.ADC_NbrOfChannel = 1;
+	ADC_InitStructure.ADC_NbrOfChannel = 2;
 	ADC_Init(ADC1, &ADC_InitStructure);
 	
 	DMA_InitTypeDef DMA_InitStructure;
@@ -40,12 +41,12 @@ void MQ2_Init()//MQ2初始化
 	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
 	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-	DMA_InitStructure.DMA_BufferSize = 2;
+	DMA_InitStructure.DMA_BufferSize = 4;
 	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
 	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
 	DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
 	DMA_Init(DMA1_Channel1, &DMA_InitStructure);
-		
+	
 	DMA_Cmd(DMA1_Channel1, ENABLE);
 	ADC_DMACmd(ADC1, ENABLE);
 	ADC_Cmd(ADC1, ENABLE);
@@ -54,12 +55,13 @@ void MQ2_Init()//MQ2初始化
 	while (ADC_GetResetCalibrationStatus(ADC1) == SET);
 	ADC_StartCalibration(ADC1);
 	while (ADC_GetCalibrationStatus(ADC1) == SET);
-	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+	
+//	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
 }
 
-uint16_t AD_GetValue(uint8_t ADC_Channel)
+uint16_t AD_GetValue(uint8_t ADC_Channel,uint8_t ch)
 {
-	ADC_RegularChannelConfig(ADC1, ADC_Channel, 1, ADC_SampleTime_239Cycles5);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel, ch, ADC_SampleTime_239Cycles5);
 	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
 	while (ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == RESET);
 	return ADC_GetConversionValue(ADC1);
@@ -71,8 +73,8 @@ u16 Get_ADC_Average(u8 times)//利用AD返回值做计算，times为次数
 	u32 temp_val=0;
 	u8 t;
 	for(t=0;t<times;t++){
-		temp_val+=AD_GetValue(ADC_Channel_4);
-//		temp_val+=AD_Value[0];
+		temp_val+=AD_GetValue(ADC_Channel_4,1);
+		//temp_val+=AD_Value[0];
 		Delay_ms(5);
 	}
 	return temp_val/times;
@@ -120,5 +122,41 @@ void TIM3_Init()
 	NVIC_Init(&NVIC_Initstructure);
 	
 	TIM_Cmd(TIM3,ENABLE);
+}
+
+u16 ADC2_Average_Data(u8 CO_READ_TIMES)
+{
+	u16 temp_val=0;
+	u8 t;
+	for(t=0;t<CO_READ_TIMES;t++)	//#define CO_READ_TIMES	10	定义烟雾传感器读取次数,读这么多次,然后取平均值
+ 
+	{
+		//temp_val+=AD_Value[1];
+		temp_val+=AD_GetValue(ADC_Channel_6,2);	//读取ADC值
+		Delay_ms(5);
+	}
+	temp_val/=CO_READ_TIMES;//得到平均值
+    return (u16)temp_val;//返回算出的ADC平均值
+}
+
+
+float CO_Get_Vol()
+{
+	u16 adc_value = 0;//这是从MQ-7传感器模块电压输出的ADC转换中获得的原始数字值，该值的范围为0到4095，将模拟电压表示为数字值
+	float voltage = 0;//MQ-7传感器模块的电压输出，与一氧化碳的浓度成正比
+	
+	adc_value = ADC2_Average_Data(30);
+	Delay_ms(5);
+    voltage  = (3.3/4096.0)*(adc_value);
+	
+	return voltage;
+}
+
+
+float MQ7_GetPPM()
+{
+	float RS = (3.3f - CO_Get_Vol()) / CO_Get_Vol() * RL;
+	float ppm = 98.322f * pow(RS/CO_R0, -1.458f);
+	return  ppm;
 }
 
