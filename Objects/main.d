@@ -1,7 +1,7 @@
 .\objects\main.o: User\main.c
 .\objects\main.o: .\Start\stm32f10x.h
 .\objects\main.o: .\Start\core_cm3.h
-.\objects\main.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\main.o: E:\MDK536\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\main.o: .\Start\system_stm32f10x.h
 .\objects\main.o: .\User\stm32f10x_conf.h
 .\objects\main.o: .\Library\stm32f10x_adc.h
@@ -29,7 +29,7 @@
 .\objects\main.o: .\Library\stm32f10x_wwdg.h
 .\objects\main.o: .\Library\misc.h
 .\objects\main.o: .\FreeRTOS\include\FreeRTOS.h
-.\objects\main.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\main.o: E:\MDK536\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\main.o: .\FreeRTOS\include\FreeRTOSConfig.h
 .\objects\main.o: .\FreeRTOS\include\projdefs.h
 .\objects\main.o: .\FreeRTOS\include\portable.h
@@ -41,11 +41,11 @@
 .\objects\main.o: .\Hardware\OLED\OLED.h
 .\objects\main.o: .\Hardware\DHT11\DHT.h
 .\objects\main.o: .\System\Delay.h
-.\objects\main.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\main.o: E:\MDK536\ARM\ARMCC\Bin\..\include\string.h
 .\objects\main.o: .\Hardware\Buzzer\Buzzer.h
 .\objects\main.o: .\Hardware\USART\USART.h
-.\objects\main.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\main.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\main.o: E:\MDK536\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\main.o: E:\MDK536\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\main.o: .\FreeRTOS\include\queue.h
 .\objects\main.o: .\Hardware\FAN\FAN.h
 .\objects\main.o: .\Hardware\ESP8266\ESP8266.h

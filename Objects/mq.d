@@ -1,7 +1,7 @@
 .\objects\mq.o: Hardware\MQ\MQ.c
 .\objects\mq.o: .\Start\stm32f10x.h
 .\objects\mq.o: .\Start\core_cm3.h
-.\objects\mq.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\mq.o: E:\MDK536\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\mq.o: .\Start\system_stm32f10x.h
 .\objects\mq.o: .\User\stm32f10x_conf.h
 .\objects\mq.o: .\Library\stm32f10x_adc.h
@@ -30,4 +30,4 @@
 .\objects\mq.o: .\Library\misc.h
 .\objects\mq.o: Hardware\MQ\MQ.h
 .\objects\mq.o: .\System\Delay.h
-.\objects\mq.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\mq.o: E:\MDK536\ARM\ARMCC\Bin\..\include\math.h

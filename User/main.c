@@ -178,8 +178,7 @@ static void DHT11_Show(void)
 void led0_task(void *pvParameters)
 {
      while(1)
-     {
-        
+     {        
 		 OLED_ShowString(1, 1, "temp:");
 		 OLED_ShowString(2, 1, "humi:");
 		 OLED_ShowString(3, 1, "MQ2:");
@@ -191,9 +190,9 @@ void led0_task(void *pvParameters)
 		 coData=MQ7_GetPPM();
 		 sprintf(buffer2,"%.2lf",coData);
 		 OLED_ShowString(4, 5, buffer2);
-		 LED_ON();
-		 Buzzer_OFF();
-		 FAN_Speed(FAN_OFF);  
+		 //LED_ON();
+		 
+		 //FAN_Speed(FAN_OFF);  
 //		 num++;
 //		 OLED_ShowNum(3, 6, AD_Value[0], 4);
 //		 OLED_ShowNum(4, 6, AD_Value[1], 4);
@@ -253,31 +252,22 @@ void usartREC_task(void *pvParameters)
             OLED_ShowString(4,1,receivedData);
             if(strstr(receivedData,"LED_ON"))
             {
-                
-                OLED_ShowString(2,1,"LED_ON");
-                
+                LED_ON();               
             }
             else if(strstr(receivedData,"LED_OFF"))
             {
-                
-                OLED_ShowString(2,1,"LED_OFF");
-                
+                LED_OFF();              
             }
             else if(strstr(receivedData,"BUZZER_OFF"))
             {
-                
-                OLED_ShowString(2,1,"BUZZER_OFF");
-                
+                Buzzer_OFF();            
             }
             else if(strstr(receivedData,"BUZZER_ON"))
-            {
-                
-                OLED_ShowString(2,1,"BUZZER_ON");
-                
+            {                
+                Buzzer_ON();                   
             }
             else if(strstr(receivedData,"FAN_OFF"))
-            {
-                
+            {                
                 OLED_ShowString(2,1,"FAN_OFF");
                 
             }
@@ -320,7 +310,7 @@ int main(void)
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组 4      
     /*init*/
     OLED_Init();
-    //USART1_Init();
+    USART1_Init();
 	DHT11_GPIO_Config();
 	MQ_Init();
 	TIM3_Init();
@@ -330,6 +320,7 @@ int main(void)
 
 	Buzzer_Init();
 	FAN_Init();
+    Buzzer_OFF();
     //ESP8266_Init();
      //创建开始任务
     xTaskCreate((TaskFunction_t )start_task,            //任务函数

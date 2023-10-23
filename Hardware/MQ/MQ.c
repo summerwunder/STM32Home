@@ -3,7 +3,7 @@
 #include "Delay.h"
 #include "math.h"
 
-float R0=6;//元件在洁净空气中的阻值
+float R0=20;//元件在洁净空气中的阻值
 uint16_t AD_Value[2];
 uint16_t times;
 
@@ -55,31 +55,23 @@ void MQ_Init()//MQ2初始化
 	while (ADC_GetResetCalibrationStatus(ADC1) == SET);
 	ADC_StartCalibration(ADC1);
 	while (ADC_GetCalibrationStatus(ADC1) == SET);
-	
-//	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
-}
-
-uint16_t AD_GetValue(uint8_t ADC_Channel,uint8_t ch)
-{
-	ADC_RegularChannelConfig(ADC1, ADC_Channel, ch, ADC_SampleTime_239Cycles5);
 	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
-	while (ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == RESET);
-	return ADC_GetConversionValue(ADC1);
+
 }
 
 
-u16 Get_ADC_Average(u8 times)//利用AD返回值做计算，times为次数
+
+static uint16_t Get_ADC_Average(uint8_t times)//利用AD返回值做计算，times为次数
 {
-	u32 temp_val=0;
-	u8 t;
+	uint32_t temp_val=0;
+	uint8_t t;
 	for(t=0;t<times;t++){
-		temp_val+=AD_GetValue(ADC_Channel_4,1);
-		//temp_val+=AD_Value[0];
+		temp_val+=AD_Value[0];
 		Delay_ms(5);
 	}
 	return temp_val/times;
 }
-void TIM3_IRQHandler(void){
+static void TIM3_IRQHandler(void){
 	if(TIM_GetITStatus(TIM3,TIM_IT_Update)!=RESET){
 		TIM_ClearITPendingBit(TIM3,TIM_IT_Update);
 		times++;
@@ -88,7 +80,7 @@ void TIM3_IRQHandler(void){
 
 float MQ2_GetPPM()
 {
-	u16 x;
+	uint16_t x;
 	x=Get_ADC_Average(30);
 	float Vr1=3.3f * x / 4096.f;
 	Vr1=((float)((int)((Vr1+0.005)*100)))/100;
@@ -124,25 +116,24 @@ void TIM3_Init()
 	TIM_Cmd(TIM3,ENABLE);
 }
 
-u16 ADC2_Average_Data(u8 CO_READ_TIMES)
+static uint16_t ADC2_Average_Data(uint8_t CO_READ_TIMES)
 {
-	u16 temp_val=0;
-	u8 t;
-	for(t=0;t<CO_READ_TIMES;t++)	//#define CO_READ_TIMES	10	定义烟雾传感器读取次数,读这么多次,然后取平均值
- 
+	uint16_t temp_val=0;
+	uint8_t t;
+	for(t=0;t<CO_READ_TIMES;t++)	//#define CO_READ_TIMES	10	定义烟雾传感器读取次数,读这么多次,然后取平均值 
 	{
-		//temp_val+=AD_Value[1];
-		temp_val+=AD_GetValue(ADC_Channel_6,2);	//读取ADC值
+		temp_val+=AD_Value[1];
+		//temp_val+=AD_GetValue(ADC_Channel_6,2);	//读取ADC值
 		Delay_ms(5);
 	}
 	temp_val/=CO_READ_TIMES;//得到平均值
-    return (u16)temp_val;//返回算出的ADC平均值
+    return (uint16_t)temp_val;//返回算出的ADC平均值
 }
 
 
 float CO_Get_Vol()
 {
-	u16 adc_value = 0;//这是从MQ-7传感器模块电压输出的ADC转换中获得的原始数字值，该值的范围为0到4095，将模拟电压表示为数字值
+	uint16_t adc_value = 0;//这是从MQ-7传感器模块电压输出的ADC转换中获得的原始数字值，该值的范围为0到4095，将模拟电压表示为数字值
 	float voltage = 0;//MQ-7传感器模块的电压输出，与一氧化碳的浓度成正比
 	
 	adc_value = ADC2_Average_Data(30);
@@ -155,7 +146,7 @@ float CO_Get_Vol()
 
 float MQ7_GetPPM()
 {
-	float RS = (3.3f - CO_Get_Vol()) / CO_Get_Vol() * RL;
+	float RS = (3.3f - CO_Get_Vol()) / CO_Get_Vol() * C0_RL;
 	float ppm = 98.322f * pow(RS/CO_R0, -1.458f);
 	return  ppm;
 }
