@@ -4,7 +4,7 @@
 #include "math.h"
 
 float R0=6;//元件在洁净空气中的阻值
-uint16_t AD_Value[4];
+uint16_t AD_Value[2];
 uint16_t times;
 
 void MQ2_Init()//MQ2初始化
@@ -15,19 +15,21 @@ void MQ2_Init()//MQ2初始化
 	
 	GPIO_InitTypeDef GPIO_InitStructure;
 	GPIO_InitStructure.GPIO_Mode=GPIO_Mode_AIN;
-	GPIO_InitStructure.GPIO_Pin=GPIO_Pin_4;
+	GPIO_InitStructure.GPIO_Pin=GPIO_Pin_4|GPIO_Pin_6;
 	GPIO_InitStructure.GPIO_Speed=GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA,&GPIO_InitStructure);
 	
 	RCC_ADCCLKConfig(RCC_PCLK2_Div6);
-	//ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 1, ADC_SampleTime_239Cycles5);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 1, ADC_SampleTime_239Cycles5);
+	//ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 2, ADC_SampleTime_239Cycles5);
+
 	ADC_InitTypeDef ADC_InitStructure;
 	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
 	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
 	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
 	ADC_InitStructure.ADC_ScanConvMode = ENABLE;
-	ADC_InitStructure.ADC_NbrOfChannel = 3;
+	ADC_InitStructure.ADC_NbrOfChannel = 1;
 	ADC_Init(ADC1, &ADC_InitStructure);
 	
 	DMA_InitTypeDef DMA_InitStructure;
@@ -38,7 +40,7 @@ void MQ2_Init()//MQ2初始化
 	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
 	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-	DMA_InitStructure.DMA_BufferSize = 4;
+	DMA_InitStructure.DMA_BufferSize = 2;
 	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
 	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
 	DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
@@ -70,6 +72,7 @@ u16 Get_ADC_Average(u8 times)//利用AD返回值做计算，times为次数
 	u8 t;
 	for(t=0;t<times;t++){
 		temp_val+=AD_GetValue(ADC_Channel_4);
+//		temp_val+=AD_Value[0];
 		Delay_ms(5);
 	}
 	return temp_val/times;

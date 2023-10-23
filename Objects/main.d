@@ -42,10 +42,10 @@
 .\objects\main.o: .\Hardware\DHT11\DHT.h
 .\objects\main.o: .\Hardware\MQ2\MQ2.h
 .\objects\main.o: .\System\Delay.h
+.\objects\main.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\main.o: .\Hardware\Buzzer\Buzzer.h
 .\objects\main.o: .\Hardware\USART\USART.h
 .\objects\main.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\main.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\main.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\main.o: .\FreeRTOS\include\queue.h
 .\objects\main.o: .\Hardware\FAN\FAN.h

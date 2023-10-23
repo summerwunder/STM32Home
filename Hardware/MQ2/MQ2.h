@@ -2,8 +2,8 @@
 #define __MQ2_H
 
 #define RL  5 //RL的阻值
-#define CAL_PPM 10//校准环境中ppm的值
-
+#define CAL_PPM 20//校准环境中ppm的值
+extern uint16_t AD_Value[2];
 
 void MQ2_Init(void);
 float MQ2_GetPPM(void);

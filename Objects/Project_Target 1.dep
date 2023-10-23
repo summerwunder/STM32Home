@@ -779,7 +779,7 @@ I (.\Library\stm32f10x_usart.h)(0x65353D80)
 I (.\Library\stm32f10x_wwdg.h)(0x65353D80)
 I (.\Library\misc.h)(0x65353D80)
 F (.\System\Delay.h)(0x65353D81)()
-F (.\User\main.c)(0x653545C4)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\System -I .\Hardware -I .\FreeRTOS\include -I .\FreeRTOS\portable\RVDS\ARM_CM3 -I .\Hardware\DHT11 -I .\Hardware\OLED -I .\Hardware\MQ2 -I .\Hardware\Buzzer -I .\Hardware\USART -I .\Hardware\FAN -I .\Hardware\ESP8266 -I .\Hardware\MQ7-I.\RTE\_Target_1-I"E:\keil_v5 pack\Keil\STM32F1xx_DFP\2.2.0\Device\Include"-IE:\keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\User\main.c)(0x65364218)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\System -I .\Hardware -I .\FreeRTOS\include -I .\FreeRTOS\portable\RVDS\ARM_CM3 -I .\Hardware\DHT11 -I .\Hardware\OLED -I .\Hardware\MQ2 -I .\Hardware\Buzzer -I .\Hardware\USART -I .\Hardware\FAN -I .\Hardware\ESP8266 -I .\Hardware\MQ7-I.\RTE\_Target_1-I"E:\keil_v5 pack\Keil\STM32F1xx_DFP\2.2.0\Device\Include"-IE:\keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (.\Start\stm32f10x.h)(0x65353D81)
 I (.\Start\core_cm3.h)(0x65353D81)
 I (E:\keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AD218)
@@ -820,19 +820,19 @@ I (.\FreeRTOS\include\task.h)(0x65353D80)
 I (.\FreeRTOS\include\list.h)(0x65353D80)
 I (.\Hardware\OLED\OLED.h)(0x65353D80)
 I (.\Hardware\DHT11\DHT.h)(0x65353D80)
-I (.\Hardware\MQ2\MQ2.h)(0x653541F8)
+I (.\Hardware\MQ2\MQ2.h)(0x6536413B)
 I (.\System\Delay.h)(0x65353D81)
+I (E:\keil_v5\ARM\ARMCC\include\string.h)(0x5D9AD218)
 I (.\Hardware\Buzzer\Buzzer.h)(0x65353D80)
 I (.\Hardware\USART\USART.h)(0x65353D80)
 I (E:\keil_v5\ARM\ARMCC\include\stdio.h)(0x5D9AD21A)
-I (E:\keil_v5\ARM\ARMCC\include\string.h)(0x5D9AD218)
 I (E:\keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9AD21A)
 I (.\FreeRTOS\include\queue.h)(0x65353D80)
 I (.\Hardware\FAN\FAN.h)(0x65353D80)
 I (.\Hardware\ESP8266\ESP8266.h)(0x65353D80)
 I (.\FreeRTOS\include\event_groups.h)(0x65353D80)
 I (.\FreeRTOS\include\timers.h)(0x65353D80)
-I (.\Hardware\MQ7\MQ7.h)(0x65353D80)
+I (.\Hardware\MQ7\MQ7.h)(0x65363F4B)
 F (.\User\stm32f10x_conf.h)(0x65353D81)()
 F (.\User\stm32f10x_it.c)(0x65353D81)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\System -I .\Hardware -I .\FreeRTOS\include -I .\FreeRTOS\portable\RVDS\ARM_CM3 -I .\Hardware\DHT11 -I .\Hardware\OLED -I .\Hardware\MQ2 -I .\Hardware\Buzzer -I .\Hardware\USART -I .\Hardware\FAN -I .\Hardware\ESP8266 -I .\Hardware\MQ7-I.\RTE\_Target_1-I"E:\keil_v5 pack\Keil\STM32F1xx_DFP\2.2.0\Device\Include"-IE:\keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\stm32f10x_it.o --omf_browse .\objects\stm32f10x_it.crf --depend .\objects\stm32f10x_it.d)
 I (User\stm32f10x_it.h)(0x65353D81)
@@ -957,7 +957,7 @@ I (.\Library\stm32f10x_usart.h)(0x65353D80)
 I (.\Library\stm32f10x_wwdg.h)(0x65353D80)
 I (.\Library\misc.h)(0x65353D80)
 I (Hardware\Buzzer\Buzzer.h)(0x65353D80)
-F (.\Hardware\MQ2\MQ2.c)(0x653544C8)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\System -I .\Hardware -I .\FreeRTOS\include -I .\FreeRTOS\portable\RVDS\ARM_CM3 -I .\Hardware\DHT11 -I .\Hardware\OLED -I .\Hardware\MQ2 -I .\Hardware\Buzzer -I .\Hardware\USART -I .\Hardware\FAN -I .\Hardware\ESP8266 -I .\Hardware\MQ7-I.\RTE\_Target_1-I"E:\keil_v5 pack\Keil\STM32F1xx_DFP\2.2.0\Device\Include"-IE:\keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\mq2.o --omf_browse .\objects\mq2.crf --depend .\objects\mq2.d)
+F (.\Hardware\MQ2\MQ2.c)(0x65363D35)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\System -I .\Hardware -I .\FreeRTOS\include -I .\FreeRTOS\portable\RVDS\ARM_CM3 -I .\Hardware\DHT11 -I .\Hardware\OLED -I .\Hardware\MQ2 -I .\Hardware\Buzzer -I .\Hardware\USART -I .\Hardware\FAN -I .\Hardware\ESP8266 -I .\Hardware\MQ7-I.\RTE\_Target_1-I"E:\keil_v5 pack\Keil\STM32F1xx_DFP\2.2.0\Device\Include"-IE:\keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\mq2.o --omf_browse .\objects\mq2.crf --depend .\objects\mq2.d)
 I (.\Start\stm32f10x.h)(0x65353D81)
 I (.\Start\core_cm3.h)(0x65353D81)
 I (E:\keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AD218)
@@ -986,10 +986,10 @@ I (.\Library\stm32f10x_tim.h)(0x65353D80)
 I (.\Library\stm32f10x_usart.h)(0x65353D80)
 I (.\Library\stm32f10x_wwdg.h)(0x65353D80)
 I (.\Library\misc.h)(0x65353D80)
-I (Hardware\MQ2\MQ2.h)(0x653541F8)
+I (Hardware\MQ2\MQ2.h)(0x6536413B)
 I (.\System\Delay.h)(0x65353D81)
 I (E:\keil_v5\ARM\ARMCC\include\math.h)(0x5D9AD212)
-F (.\Hardware\USART\USART.c)(0x65353D80)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\System -I .\Hardware -I .\FreeRTOS\include -I .\FreeRTOS\portable\RVDS\ARM_CM3 -I .\Hardware\DHT11 -I .\Hardware\OLED -I .\Hardware\MQ2 -I .\Hardware\Buzzer -I .\Hardware\USART -I .\Hardware\FAN -I .\Hardware\ESP8266 -I .\Hardware\MQ7-I.\RTE\_Target_1-I"E:\keil_v5 pack\Keil\STM32F1xx_DFP\2.2.0\Device\Include"-IE:\keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\usart.o --omf_browse .\objects\usart.crf --depend .\objects\usart.d)
+F (.\Hardware\USART\USART.c)(0x6535F615)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\System -I .\Hardware -I .\FreeRTOS\include -I .\FreeRTOS\portable\RVDS\ARM_CM3 -I .\Hardware\DHT11 -I .\Hardware\OLED -I .\Hardware\MQ2 -I .\Hardware\Buzzer -I .\Hardware\USART -I .\Hardware\FAN -I .\Hardware\ESP8266 -I .\Hardware\MQ7-I.\RTE\_Target_1-I"E:\keil_v5 pack\Keil\STM32F1xx_DFP\2.2.0\Device\Include"-IE:\keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\usart.o --omf_browse .\objects\usart.crf --depend .\objects\usart.d)
 I (.\Start\stm32f10x.h)(0x65353D81)
 I (.\Start\core_cm3.h)(0x65353D81)
 I (E:\keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AD218)
@@ -1105,7 +1105,7 @@ I (E:\keil_v5\ARM\ARMCC\include\string.h)(0x5D9AD218)
 I (E:\keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9AD21A)
 I (.\FreeRTOS\include\queue.h)(0x65353D80)
 I (.\System\Delay.h)(0x65353D81)
-F (.\Hardware\MQ7\MQ7.c)(0x65353D80)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\System -I .\Hardware -I .\FreeRTOS\include -I .\FreeRTOS\portable\RVDS\ARM_CM3 -I .\Hardware\DHT11 -I .\Hardware\OLED -I .\Hardware\MQ2 -I .\Hardware\Buzzer -I .\Hardware\USART -I .\Hardware\FAN -I .\Hardware\ESP8266 -I .\Hardware\MQ7-I.\RTE\_Target_1-I"E:\keil_v5 pack\Keil\STM32F1xx_DFP\2.2.0\Device\Include"-IE:\keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\mq7.o --omf_browse .\objects\mq7.crf --depend .\objects\mq7.d)
+F (.\Hardware\MQ7\MQ7.c)(0x65364082)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\System -I .\Hardware -I .\FreeRTOS\include -I .\FreeRTOS\portable\RVDS\ARM_CM3 -I .\Hardware\DHT11 -I .\Hardware\OLED -I .\Hardware\MQ2 -I .\Hardware\Buzzer -I .\Hardware\USART -I .\Hardware\FAN -I .\Hardware\ESP8266 -I .\Hardware\MQ7-I.\RTE\_Target_1-I"E:\keil_v5 pack\Keil\STM32F1xx_DFP\2.2.0\Device\Include"-IE:\keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\mq7.o --omf_browse .\objects\mq7.crf --depend .\objects\mq7.d)
 I (.\Start\stm32f10x.h)(0x65353D81)
 I (.\Start\core_cm3.h)(0x65353D81)
 I (E:\keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AD218)
@@ -1134,8 +1134,10 @@ I (.\Library\stm32f10x_tim.h)(0x65353D80)
 I (.\Library\stm32f10x_usart.h)(0x65353D80)
 I (.\Library\stm32f10x_wwdg.h)(0x65353D80)
 I (.\Library\misc.h)(0x65353D80)
-I (Hardware\MQ7\MQ7.h)(0x65353D80)
-I (.\Hardware\MQ2\MQ2.h)(0x653541F8)
+I (Hardware\MQ7\MQ7.h)(0x65363F4B)
+I (.\Hardware\MQ2\MQ2.h)(0x6536413B)
+I (.\System\Delay.h)(0x65353D81)
+I (E:\keil_v5\ARM\ARMCC\include\Math.h)(0x5D9AD212)
 F (.\FreeRTOS\croutine.c)(0x65353D80)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\System -I .\Hardware -I .\FreeRTOS\include -I .\FreeRTOS\portable\RVDS\ARM_CM3 -I .\Hardware\DHT11 -I .\Hardware\OLED -I .\Hardware\MQ2 -I .\Hardware\Buzzer -I .\Hardware\USART -I .\Hardware\FAN -I .\Hardware\ESP8266 -I .\Hardware\MQ7-I.\RTE\_Target_1-I"E:\keil_v5 pack\Keil\STM32F1xx_DFP\2.2.0\Device\Include"-IE:\keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="529" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\croutine.o --omf_browse .\objects\croutine.crf --depend .\objects\croutine.d)
 I (.\FreeRTOS\include\FreeRTOS.h)(0x65353D80)
 I (E:\keil_v5\ARM\ARMCC\include\stddef.h)(0x5D9AD218)

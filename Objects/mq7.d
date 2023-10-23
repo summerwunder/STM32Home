@@ -30,3 +30,5 @@
 .\objects\mq7.o: .\Library\misc.h
 .\objects\mq7.o: Hardware\MQ7\MQ7.h
 .\objects\mq7.o: .\Hardware\MQ2\MQ2.h
+.\objects\mq7.o: .\System\Delay.h
+.\objects\mq7.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\Math.h

@@ -64,7 +64,7 @@ int fputc(int ch, FILE *f)
 }
 
 void USART1_IRQHandler(void)
-{
+{   
     static uint8_t RxState=0;
     static uint8_t RxNum = 0;
     char Prefix[] = "+MQTTSUBRECV:"; // Ç°×º×Ö·û´®
@@ -72,7 +72,7 @@ void USART1_IRQHandler(void)
                            
     if (USART_GetITStatus(USART1, USART_IT_RXNE) == SET)
     {
-        uint8_t TmpData=USART_ReceiveData(USART1);
+        uint8_t TmpData=USART_ReceiveData(USART1);        
         if(RxState==0)
         {
             if(TmpData == Prefix[RxNum])
@@ -107,8 +107,7 @@ void USART1_IRQHandler(void)
                                  (void*)RxData,
                                   NULL);
                 memset(RxData,0,MAX_RX_DATA_LENGTH);
-                RxNum=0;
-                               
+                RxNum=0;                             
             }
         }       
         USART_ClearITPendingBit(USART1, USART_IT_RXNE);
