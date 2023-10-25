@@ -21,6 +21,59 @@ extern char RxData[MAX_RX_DATA_LENGTH];
 int num=0;
 extern uint8_t RxFlag;
 
+typedef enum 
+{
+    LED_ON_CMD=0,
+    LED_OFF_CMD,
+    BUZZER_OFF_CMD,
+    BUZZER_ON_CMD,
+    FAN_OFF_CMD,
+    FAN_LOW_CMD,
+    FAN_MEDIUM_CMD,
+    FAN_HIGH_CMD,
+    UNKNOWN_CMD
+}CommandType;
+
+CommandType command = UNKNOWN_CMD;  // Ä¬ÈÏÎ´ÖªÃüÁî
+
+
+static void CmdDef() 
+{   
+    if (strstr(RxData, "LED_ON")) 
+    {
+        command = LED_ON_CMD;
+    }
+    else if (strstr(RxData, "LED_OFF")) 
+    {
+        command = LED_OFF_CMD;
+    } 
+    else if (strstr(RxData, "BUZZER_OFF")) 
+    {
+        command = BUZZER_OFF_CMD;
+    } 
+    else if (strstr(RxData, "BUZZER_ON")) 
+    {
+        command = BUZZER_ON_CMD;
+    } 
+    else if (strstr(RxData, "FAN_OFF")) 
+    {
+        command = FAN_OFF_CMD;
+    } 
+    else if (strstr(RxData, "FAN_LOW")) 
+    {
+        command = FAN_LOW_CMD;
+    } 
+    else if (strstr(RxData, "FAN_MEDIUM")) 
+    {
+        command = FAN_MEDIUM_CMD;
+    } 
+    else if (strstr(RxData, "FAN_HIGH")) 
+    {
+        command = FAN_HIGH_CMD;
+    }
+}
+
+
 void DHT11_Show(void)
 {
     if(Read_DHT11(&DHT11_Data) == SUCCESS)
@@ -36,45 +89,39 @@ void DHT11_Show(void)
 
 void UsartRecTest()
 {     
-    OLED_ShowString(4,1,RxData);
-    if(strstr(RxData,"LED_ON"))
+    CmdDef();
+    switch (command) 
     {
-        LED_ON();               
+        case LED_ON_CMD:
+            LED_ON();
+            break;
+        case LED_OFF_CMD:
+            LED_OFF();
+            break;
+        case BUZZER_OFF_CMD:
+            Buzzer_OFF();
+            break;
+        case BUZZER_ON_CMD:
+            Buzzer_ON();
+            break;
+        case FAN_OFF_CMD:
+            FAN_Speed(FAN_OFF);
+            break;
+        case FAN_LOW_CMD:
+            FAN_Speed(FAN_LOW);
+            break;
+        case FAN_MEDIUM_CMD:
+            FAN_Speed(FAN_MID);
+            break;
+        case FAN_HIGH_CMD:
+            FAN_Speed(FAN_HIGH);
+            break;
+        default:
+            OLED_ShowString(1, 1, "error");
+            break;
     }
-    else if(strstr(RxData,"LED_OFF"))
-    {
-        LED_OFF();              
-    }
-    else if(strstr(RxData,"BUZZER_OFF"))
-    {
-        Buzzer_OFF();            
-    }
-    else if(strstr(RxData,"BUZZER_ON"))
-    {                
-        Buzzer_ON();                   
-    }
-    else if(strstr(RxData,"FAN_OFF"))
-    {                
-        FAN_Speed(FAN_OFF);       
-    }
-    else if(strstr(RxData,"FAN_LOW"))
-    {               
-        FAN_Speed(FAN_LOW);            
-    }
-    else if(strstr(RxData,"FAN_MEDIUM"))
-    {                
-        FAN_Speed(FAN_MID);               
-    }
-    else if(strstr(RxData,"FAN_HIGH"))
-    {               
-        FAN_Speed(FAN_HIGH);           
-    }
-    else
-    {
-        OLED_ShowString(1,1,"error");
-    }
-    RxFlag=0;
-    memset(RxData,0,MAX_RX_DATA_LENGTH);
+    RxFlag = 0;
+    memset(RxData, 0, MAX_RX_DATA_LENGTH);
 }
 
 static void Periph_Init(void)
