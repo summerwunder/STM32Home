@@ -1,7 +1,7 @@
 #ifndef __DHT_H
 #define __DHT_H
 
-#define DHT11_Out_Pin   GPIO_Pin_2
+#define DHT11_Out_Pin   GPIO_Pin_3
 #define DHT11_Out_RCC   RCC_APB2Periph_GPIOA
 #define DHT11   GPIOA
 

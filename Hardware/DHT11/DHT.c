@@ -1,7 +1,6 @@
 #include "stm32f10x.h"                  // Device header
 #include "Delay.h"
 #include "DHT.h"
-#include "FreeRTOS.h"
 
 
 void DHT11_GPIO_Config(void)
@@ -14,7 +13,7 @@ void DHT11_GPIO_Config(void)
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; 
     GPIO_Init(DHT11, &GPIO_InitStructure); 
 
-    GPIO_SetBits(DHT11, DHT11_Out_Pin);	 
+    GPIO_SetBits(DHT11,DHT11_Out_Pin);	 
 }
 
 static void DHT11_Mode_IPU(void)

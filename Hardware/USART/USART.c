@@ -1,6 +1,6 @@
 #include "stm32f10x.h"                  // Device header
 #include "USART.h"
-extern QueueHandle_t xQueueSerial;
+uint8_t RxFlag;
 char RxData[MAX_RX_DATA_LENGTH];
 void USART1_Init(void)
 {
@@ -64,19 +64,19 @@ int fputc(int ch, FILE *f)
 }
 
 void USART1_IRQHandler(void)
-{   
+{
     static uint8_t RxState=0;
     static uint8_t RxNum = 0;
-    char Prefix[] = "+MQTTSUBRECV:"; // 前缀字符串
-    uint8_t PrefixLen = sizeof(Prefix) - 1; // 前缀长度
-                           
+    static char Prefix[] = "+MQTTSUBRECV:"; // 前缀字符串
+    static uint8_t PrefixLen = sizeof(Prefix) - 1; // 前缀长度
+    
     if (USART_GetITStatus(USART1, USART_IT_RXNE) == SET)
     {
-        uint8_t TmpData=USART_ReceiveData(USART1);    
+        uint8_t TmpData=USART_ReceiveData(USART1);
         
         if(RxState==0)
         {
-            if(TmpData == Prefix[RxNum])
+            if(TmpData == Prefix[RxNum] && RxFlag == 0)
             {
                 RxNum++;            
                 if(RxNum == PrefixLen)
@@ -88,7 +88,6 @@ void USART1_IRQHandler(void)
         }
         else if(RxState==1)
         {
-            
             if(TmpData!='\r')
             {
                RxData[RxNum]=TmpData;
@@ -99,22 +98,17 @@ void USART1_IRQHandler(void)
                  RxState=2;
             }
         }
-        else if(RxState==2&&xQueueSerial!=NULL)
+        else if(RxState==2)
         {
             if (TmpData == '\n')
             {
                 RxState = 0;
                 RxData[RxNum]='\0';
-                printf("%s",RxData);
-                xQueueSendFromISR(xQueueSerial,
-                                 (void*)RxData,
-                                  NULL);
-                memset(RxData,0,MAX_RX_DATA_LENGTH);
-                RxNum=0; 
-                //printf("OK");
+                RxFlag = 1;
+                RxNum=0;
             }
         }       
         USART_ClearITPendingBit(USART1, USART_IT_RXNE);
-        portYIELD_FROM_ISR(NULL);
     }
 }
+

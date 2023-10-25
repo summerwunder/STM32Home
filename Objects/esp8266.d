@@ -30,16 +30,7 @@
 .\objects\esp8266.o: .\Library\misc.h
 .\objects\esp8266.o: Hardware\ESP8266\ESP8266.h
 .\objects\esp8266.o: .\Hardware\USART\USART.h
-.\objects\esp8266.o: .\FreeRTOS\include\FreeRTOS.h
-.\objects\esp8266.o: E:\MDK536\ARM\ARMCC\Bin\..\include\stddef.h
-.\objects\esp8266.o: .\FreeRTOS\include\FreeRTOSConfig.h
-.\objects\esp8266.o: .\FreeRTOS\include\projdefs.h
-.\objects\esp8266.o: .\FreeRTOS\include\portable.h
-.\objects\esp8266.o: .\FreeRTOS\include\deprecated_definitions.h
-.\objects\esp8266.o: .\FreeRTOS\portable\RVDS\ARM_CM3\portmacro.h
-.\objects\esp8266.o: .\FreeRTOS\include\mpu_wrappers.h
 .\objects\esp8266.o: E:\MDK536\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\esp8266.o: E:\MDK536\ARM\ARMCC\Bin\..\include\string.h
 .\objects\esp8266.o: E:\MDK536\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\esp8266.o: .\FreeRTOS\include\queue.h
 .\objects\esp8266.o: .\System\Delay.h

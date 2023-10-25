@@ -30,11 +30,3 @@
 .\objects\dht.o: .\Library\misc.h
 .\objects\dht.o: .\System\Delay.h
 .\objects\dht.o: Hardware\DHT11\DHT.h
-.\objects\dht.o: .\FreeRTOS\include\FreeRTOS.h
-.\objects\dht.o: E:\MDK536\ARM\ARMCC\Bin\..\include\stddef.h
-.\objects\dht.o: .\FreeRTOS\include\FreeRTOSConfig.h
-.\objects\dht.o: .\FreeRTOS\include\projdefs.h
-.\objects\dht.o: .\FreeRTOS\include\portable.h
-.\objects\dht.o: .\FreeRTOS\include\deprecated_definitions.h
-.\objects\dht.o: .\FreeRTOS\portable\RVDS\ARM_CM3\portmacro.h
-.\objects\dht.o: .\FreeRTOS\include\mpu_wrappers.h
