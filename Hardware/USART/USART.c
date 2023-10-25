@@ -1,6 +1,6 @@
 #include "stm32f10x.h"                  // Device header
 #include "USART.h"
-
+extern QueueHandle_t xQueueSerial;
 char RxData[MAX_RX_DATA_LENGTH];
 void USART1_Init(void)
 {
@@ -35,7 +35,7 @@ void USART1_Init(void)
     NVIC_InitTypeDef NVIC_InitStructure;
     NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 5;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
     NVIC_Init(&NVIC_InitStructure);
 
@@ -72,7 +72,8 @@ void USART1_IRQHandler(void)
                            
     if (USART_GetITStatus(USART1, USART_IT_RXNE) == SET)
     {
-        uint8_t TmpData=USART_ReceiveData(USART1);        
+        uint8_t TmpData=USART_ReceiveData(USART1);    
+        
         if(RxState==0)
         {
             if(TmpData == Prefix[RxNum])
@@ -87,6 +88,7 @@ void USART1_IRQHandler(void)
         }
         else if(RxState==1)
         {
+            
             if(TmpData!='\r')
             {
                RxData[RxNum]=TmpData;
@@ -103,11 +105,13 @@ void USART1_IRQHandler(void)
             {
                 RxState = 0;
                 RxData[RxNum]='\0';
+                printf("%s",RxData);
                 xQueueSendFromISR(xQueueSerial,
                                  (void*)RxData,
                                   NULL);
                 memset(RxData,0,MAX_RX_DATA_LENGTH);
-                RxNum=0;                             
+                RxNum=0; 
+                //printf("OK");
             }
         }       
         USART_ClearITPendingBit(USART1, USART_IT_RXNE);

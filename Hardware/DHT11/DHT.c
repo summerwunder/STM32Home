@@ -1,6 +1,7 @@
 #include "stm32f10x.h"                  // Device header
 #include "Delay.h"
 #include "DHT.h"
+#include "FreeRTOS.h"
 
 
 void DHT11_GPIO_Config(void)

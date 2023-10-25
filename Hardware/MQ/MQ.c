@@ -71,12 +71,7 @@ static uint16_t Get_ADC_Average(uint8_t times)//利用AD返回值做计算，times为次数
 	}
 	return temp_val/times;
 }
-static void TIM3_IRQHandler(void){
-	if(TIM_GetITStatus(TIM3,TIM_IT_Update)!=RESET){
-		TIM_ClearITPendingBit(TIM3,TIM_IT_Update);
-		times++;
-	}
-}
+
 
 float MQ2_GetPPM()
 {
@@ -93,7 +88,7 @@ float MQ2_GetPPM()
 	return ppm;
 }
 
-void TIM3_Init()
+void TIM3_Init(void)
 {	
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitsture;
 	NVIC_InitTypeDef NVIC_Initstructure;
@@ -108,7 +103,7 @@ void TIM3_Init()
 	TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE);
 	
 	NVIC_Initstructure.NVIC_IRQChannel=TIM3_IRQn;
-	NVIC_Initstructure.NVIC_IRQChannelPreemptionPriority=0;
+	NVIC_Initstructure.NVIC_IRQChannelPreemptionPriority=12;
 	NVIC_Initstructure.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstructure.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstructure);
@@ -123,7 +118,6 @@ static uint16_t ADC2_Average_Data(uint8_t CO_READ_TIMES)
 	for(t=0;t<CO_READ_TIMES;t++)	//#define CO_READ_TIMES	10	定义烟雾传感器读取次数,读这么多次,然后取平均值 
 	{
 		temp_val+=AD_Value[1];
-		//temp_val+=AD_GetValue(ADC_Channel_6,2);	//读取ADC值
 		Delay_ms(5);
 	}
 	temp_val/=CO_READ_TIMES;//得到平均值
@@ -151,3 +145,11 @@ float MQ7_GetPPM()
 	return  ppm;
 }
 
+void TIM3_IRQHandler()
+{	
+	 if(TIM_GetITStatus(TIM3,TIM_IT_Update) != RESET)//判断状态
+	 { 
+		 TIM_ClearITPendingBit(TIM3,TIM_IT_Update);//清除中断待处理位
+		 times++;
+	 }
+}

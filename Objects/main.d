@@ -53,3 +53,4 @@
 .\objects\main.o: .\FreeRTOS\include\timers.h
 .\objects\main.o: .\Hardware\MQ\MQ.h
 .\objects\main.o: .\Hardware\LED\LED.h
+.\objects\main.o: .\FreeRTOS\include\semphr.h

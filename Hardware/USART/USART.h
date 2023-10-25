@@ -8,7 +8,7 @@
 #include "queue.h"
 
 #define MAX_RX_DATA_LENGTH 128 
-extern QueueHandle_t xQueueSerial;
+
 void USART1_Init(void);
 void USART_SendByte(uint8_t Byte);
 void USART_SendString(char *String);
