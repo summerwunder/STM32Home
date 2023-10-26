@@ -9,6 +9,9 @@
 #include "ESP8266.h"
 #include "MQ.h"
 #include "LED.h"
+
+#define YES 1
+#define NO 0
 /*用于格式化显示于OLED而定义的数组*/
 /*对于传输数据无实际意义*/
 char buffer1[4];
@@ -25,7 +28,7 @@ extern char RxData[MAX_RX_DATA_LENGTH];
 extern uint8_t RxFlag;
 /*报警阈值*/
 #define TEMP_MAX_ALTER 35
-#define HUMI_MAX_ALTER 80
+#define HUMI_MAX_ALTER 85
 #define SMOKE_MAX_ALTER 100
 #define CO_MAX_ALTER 50
 /*定义esp8266接收数据的命令的枚举*/
@@ -102,8 +105,21 @@ void DHT11_Show(void)
         OLED_ShowNum(1, 6, DHT11_Data.temp_int, 2);            
     }
 }
-
-
+/**
+  * @brief  根据阈值判断是否需要报警
+  * @param  无
+  * @retval YES：需要报警
+            NO：不需要报警
+  */
+static uint8_t isAlter(void)
+{
+    if(tempData>TEMP_MAX_ALTER||humiData>HUMI_MAX_ALTER
+        ||smokeData>SMOKE_MAX_ALTER||coData>CO_MAX_ALTER)
+    {
+        return YES;           
+    } 
+    return NO;
+}
 /**
   * @brief  对于串口接收到的CMD进行处理
   * @param  无
@@ -164,8 +180,25 @@ static void Periph_Init(void)
     Buzzer_OFF();    
     ESP8266_Init();
 }
-
-static void OLED_show(void)
+/**
+  * @brief  初始化OLED界面信息
+  * @param  无
+  * @retval 无
+  */
+static void OLED_ShowInit()
+{    
+    /*OLED显示初始化*/
+    OLED_ShowString(1, 1, "temp:");
+    OLED_ShowString(2, 1, "humi:");
+    OLED_ShowString(3, 1, "MQ2:");
+    OLED_ShowString(4, 1, "MQ7:");    
+}
+/**
+  * @brief  OLED显示数值
+  * @param  无
+  * @retval 无
+  */
+static void OLED_Show(void)
 {
     /*该部分获取传感器数据并且在OLED显示，同时赋值给全局变量*/
     DHT11_Show();
@@ -176,22 +209,30 @@ static void OLED_show(void)
     sprintf(buffer2,"%.2lf",coData);
     OLED_ShowString(4, 5, buffer2);   
 }
+
+
 int main(void)
 {      
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组 4      
     Periph_Init();
-
-    /*OLED显示初始化*/
-    OLED_ShowString(1, 1, "temp:");
-    OLED_ShowString(2, 1, "humi:");
-    OLED_ShowString(3, 1, "MQ2:");
-    OLED_ShowString(4, 1, "MQ7:");
+    OLED_ShowInit();
     
     while(1)
     {  
-        OLED_show();      
-        //printf("%d %d %.2f %.2f\r\n",tempData,humiData,smokeData,coData);
+        OLED_Show();             
         ESP8266_SendData(humiData,tempData,smokeData,coData);
+        if(isAlter())
+        {
+            Buzzer_ON();
+            LED_ON();
+            FAN_Speed(FAN_MID);           
+        }
+        else
+        {
+            Buzzer_OFF();
+            LED_OFF();
+            FAN_Speed(FAN_OFF);               
+        }
         Delay_ms(20);
         /*接收到数据则及时处理*/
         if(RxFlag==1)
