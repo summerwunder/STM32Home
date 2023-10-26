@@ -19,7 +19,7 @@ void ESP8266_Init(void)
     Delay_ms(4000);
         
     USART_SendString(ESP8266_MQTT_INFO);
-    Delay_ms(1000);
+    Delay_ms(2000);
     
     printf(ESP8266_INTERNET_INFO);
     Delay_ms(3000);

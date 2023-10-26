@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Start;.\User;.\Library;.\System;.\Hardware;.\FreeRTOS\include;.\FreeRTOS\portable\RVDS\ARM_CM3;.\Hardware\DHT11;.\Hardware\OLED;.\Hardware\Buzzer;.\Hardware\USART;.\Hardware\FAN;.\Hardware\ESP8266;.\Hardware\MQ;.\Hardware\LED</IncludePath>
+              <IncludePath>.\Start;.\User;.\Library;.\System;.\Hardware;.\FreeRTOS\include;.\FreeRTOS\portable\RVDS\ARM_CM3;.\Hardware\DHT11;.\Hardware\OLED;.\Hardware\Buzzer;.\Hardware\USART;.\Hardware\FAN;.\Hardware\ESP8266;.\Hardware\MQ;.\Hardware\LED;.\Hardware\ALTER;.\Hardware\IWDG</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -735,9 +735,9 @@
               <FilePath>.\Hardware\LED\LED.c</FilePath>
             </File>
             <File>
-              <FileName>alter.c</FileName>
+              <FileName>iwdg.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\ALTER\alter.c</FilePath>
+              <FilePath>.\Hardware\IWDG\iwdg.c</FilePath>
             </File>
           </Files>
         </Group>

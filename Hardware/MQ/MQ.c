@@ -103,7 +103,7 @@ void TIM3_Init(void)
 	TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE);
 	
 	NVIC_Initstructure.NVIC_IRQChannel=TIM3_IRQn;
-	NVIC_Initstructure.NVIC_IRQChannelPreemptionPriority=12;
+	NVIC_Initstructure.NVIC_IRQChannelPreemptionPriority=8;
 	NVIC_Initstructure.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstructure.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstructure);

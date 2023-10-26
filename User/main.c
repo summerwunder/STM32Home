@@ -9,7 +9,9 @@
 #include "ESP8266.h"
 #include "MQ.h"
 #include "LED.h"
-
+#include "iwdg.h"
+/*报警相关*/
+uint8_t alterActive;
 #define YES 1
 #define NO 0
 /*用于格式化显示于OLED而定义的数组*/
@@ -28,7 +30,7 @@ extern char RxData[MAX_RX_DATA_LENGTH];
 extern uint8_t RxFlag;
 /*报警阈值*/
 #define TEMP_MAX_ALTER 35
-#define HUMI_MAX_ALTER 85
+#define HUMI_MAX_ALTER 80
 #define SMOKE_MAX_ALTER 100
 #define CO_MAX_ALTER 50
 /*定义esp8266接收数据的命令的枚举*/
@@ -115,7 +117,7 @@ static uint8_t isAlter(void)
 {
     if(tempData>TEMP_MAX_ALTER||humiData>HUMI_MAX_ALTER
         ||smokeData>SMOKE_MAX_ALTER||coData>CO_MAX_ALTER)
-    {
+    {        
         return YES;           
     } 
     return NO;
@@ -125,7 +127,7 @@ static uint8_t isAlter(void)
   * @param  无
   * @retval 无
   */
-void UsartRecTest()
+static void UsartRecTest()
 {     
     CmdDef();
     switch (command) 
@@ -175,10 +177,11 @@ static void Periph_Init(void)
     MQ_Init();
     TIM3_Init();
 	LED_Init();
-	Buzzer_Init();
+	Buzzer_Init();    
     FAN_Init();
     Buzzer_OFF();    
     ESP8266_Init();
+    IWDG_Init(4, 625);
 }
 /**
   * @brief  初始化OLED界面信息
@@ -192,7 +195,7 @@ static void OLED_ShowInit()
     OLED_ShowString(2, 1, "humi:");
     OLED_ShowString(3, 1, "MQ2:");
     OLED_ShowString(4, 1, "MQ7:");    
-}
+} 
 /**
   * @brief  OLED显示数值
   * @param  无
@@ -216,23 +219,34 @@ int main(void)
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组 4      
     Periph_Init();
     OLED_ShowInit();
-    
     while(1)
     {  
         OLED_Show();             
         ESP8266_SendData(humiData,tempData,smokeData,coData);
-        if(isAlter())
+        if(isAlter()==YES&&alterActive==0)
         {
-            Buzzer_ON();
             LED_ON();
-            FAN_Speed(FAN_MID);           
+            Buzzer_ON();
+            FAN_Speed(FAN_HIGH); 
+            alterActive=1;                              
         }
-        Delay_ms(20);
+        else if(isAlter()==NO&&alterActive==1)
+        {
+            LED_OFF();
+            Buzzer_OFF();
+            FAN_Speed(FAN_OFF); 
+            alterActive=0;            
+        }
+        
+        Delay_ms(20); 
         /*接收到数据则及时处理*/
-        if(RxFlag==1)
+        /*报警时候控制无效*/
+        if(RxFlag==1&&alterActive==0)
         {
             UsartRecTest();
         }
+        // 喂独立看门狗
+        IWDG_Feed();
     }
    
 }

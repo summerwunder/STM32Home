@@ -29,3 +29,7 @@
 .\objects\alter.o: .\Library\stm32f10x_wwdg.h
 .\objects\alter.o: .\Library\misc.h
 .\objects\alter.o: Hardware\ALTER\alter.h
+.\objects\alter.o: .\Hardware\FAN\FAN.h
+.\objects\alter.o: .\Hardware\LED\LED.h
+.\objects\alter.o: .\Hardware\Buzzer\Buzzer.h
+.\objects\alter.o: .\Hardware\OLED\OLED.h

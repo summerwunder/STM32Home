@@ -40,3 +40,4 @@
 .\objects\main.o: .\Hardware\ESP8266\ESP8266.h
 .\objects\main.o: .\Hardware\MQ\MQ.h
 .\objects\main.o: .\Hardware\LED\LED.h
+.\objects\main.o: .\Hardware\IWDG\iwdg.h
