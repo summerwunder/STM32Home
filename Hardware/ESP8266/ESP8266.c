@@ -16,7 +16,7 @@ void ESP8266_Init(void)
     Delay_ms(1000);
     
     printf(ESP8266_WIFI_INFO);
-    Delay_ms(2000);
+    Delay_ms(4000);
         
     USART_SendString(ESP8266_MQTT_INFO);
     Delay_ms(1000);
@@ -34,6 +34,6 @@ void ESP8266_SendData(uint8_t humi,uint8_t temp,double smoke,double coDense)
     char pubtopic[100]="esp/1";
     char cmdBuf[512];  
     memset(cmdBuf,0,sizeof(cmdBuf));      
-    sprintf(cmdBuf, "AT+MQTTPUB=0,\"%s\",\"{\\\"humi\\\":%d\\,\\\"temp\\\":%d\\,\\\"smokeValue\\\":%lf\\,\\\"coValue\\\":%lf}\",1,0\r\n",pubtopic,humi,temp,smoke,coDense);//∑¢ÀÕ√¸¡Ó
+    sprintf(cmdBuf, "AT+MQTTPUB=0,\"%s\",\"{\\\"humi\\\":%d\\, \\\"temp\\\":%d\\, \\\"smokeValue\\\":%.1lf\\, \\\"coValue\\\":%.1lf}\",1,0\r\n",pubtopic,humi,temp,smoke,coDense);//∑¢ÀÕ√¸¡Ó
     printf("%s",cmdBuf);  
 }

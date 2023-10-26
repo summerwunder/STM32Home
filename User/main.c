@@ -158,7 +158,7 @@ static void Periph_Init(void)
 	Buzzer_Init();
     FAN_Init();
     Buzzer_OFF();    
-    //ESP8266_Init();
+    ESP8266_Init();
 }
 
 
@@ -184,7 +184,9 @@ int main(void)
         sprintf(buffer2,"%.2lf",coData);
         OLED_ShowString(4, 5, buffer2);
               
-        printf("%d %d %.2f %.2f\r\n",tempData,humiData,smokeData,coData);
+        //printf("%d %d %.2f %.2f\r\n",tempData,humiData,smokeData,coData);
+        ESP8266_SendData(humiData,tempData,smokeData,coData);
+        Delay_ms(20);
         /*接收到数据则及时处理*/
         if(RxFlag==1)
         {
