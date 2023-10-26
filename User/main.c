@@ -23,7 +23,11 @@ double coData;
 /*串口接收数据的变量，来自usart.c*/
 extern char RxData[MAX_RX_DATA_LENGTH];    
 extern uint8_t RxFlag;
-
+/*报警阈值*/
+#define TEMP_MAX_ALTER 35
+#define HUMI_MAX_ALTER 80
+#define SMOKE_MAX_ALTER 100
+#define CO_MAX_ALTER 50
 /*定义esp8266接收数据的命令的枚举*/
 typedef enum 
 {
@@ -161,7 +165,17 @@ static void Periph_Init(void)
     ESP8266_Init();
 }
 
-
+static void OLED_show(void)
+{
+    /*该部分获取传感器数据并且在OLED显示，同时赋值给全局变量*/
+    DHT11_Show();
+    smokeData = MQ2_GetPPM();//将vel字符串类型转换为数字存储到数组
+    sprintf(buffer1,"%.2lf",smokeData);
+    OLED_ShowString(3, 5, buffer1);
+    coData=MQ7_GetPPM();
+    sprintf(buffer2,"%.2lf",coData);
+    OLED_ShowString(4, 5, buffer2);   
+}
 int main(void)
 {      
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组 4      
@@ -175,15 +189,7 @@ int main(void)
     
     while(1)
     {  
-        /*该部分获取传感器数据并且在OLED显示，同时赋值给全局变量*/
-        DHT11_Show();
-        smokeData = MQ2_GetPPM();//将vel字符串类型转换为数字存储到数组
-        sprintf(buffer1,"%.2lf",smokeData);
-        OLED_ShowString(3, 5, buffer1);
-        coData=MQ7_GetPPM();
-        sprintf(buffer2,"%.2lf",coData);
-        OLED_ShowString(4, 5, buffer2);
-              
+        OLED_show();      
         //printf("%d %d %.2f %.2f\r\n",tempData,humiData,smokeData,coData);
         ESP8266_SendData(humiData,tempData,smokeData,coData);
         Delay_ms(20);
