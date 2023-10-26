@@ -734,6 +734,11 @@
               <FileType>1</FileType>
               <FilePath>.\Hardware\LED\LED.c</FilePath>
             </File>
+            <File>
+              <FileName>alter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\ALTER\alter.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

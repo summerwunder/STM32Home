@@ -227,12 +227,6 @@ int main(void)
             LED_ON();
             FAN_Speed(FAN_MID);           
         }
-        else
-        {
-            Buzzer_OFF();
-            LED_OFF();
-            FAN_Speed(FAN_OFF);               
-        }
         Delay_ms(20);
         /*接收到数据则及时处理*/
         if(RxFlag==1)
